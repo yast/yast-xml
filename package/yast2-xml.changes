@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Sat Jul 20 21:46:22 CEST 2002 - nashif@suse.de
+
+- use yast2-devel-packages
+- 2.6.5
+
+-------------------------------------------------------------------
 Tue Jul 16 02:01:11 CEST 2002 - nashif@suse.de
 
 - Dont set empty namespaces
