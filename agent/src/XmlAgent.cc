@@ -674,6 +674,7 @@ xmlagentError(void *ctx, const char *msg, ...)
 
 
 
+
 /**
  * Read
  */
@@ -687,9 +688,6 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
     xmlDocPtr doc;
     xmlNodePtr tree;
     int ret, xi;
-
-
-
 
     // Parse Path
     for (int i=0; i<path->length(); i++) {
@@ -810,12 +808,21 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 }
 
 
+/**
+ * Write
+ */
+YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value,
+    const YCPValue& arg)
+{
+    y2error("Wrong path '%s' in Write().", path->toString().c_str());
+    return YCPVoid();
+}
 
 
 /**
- * Write XML from YCP data
+ * Execute  XML from YCP data
  */
-YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPValue& arg )
+YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCPValue& arg )
 {
     const char *filename;
 
@@ -826,10 +833,6 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 
     xmlDocPtr doc, newDoc;
     xmlChar *mem;
-
-
-
-
 
     for (int i=0; i<path->length(); i++)
     {
@@ -844,7 +847,6 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 
     YCPMap argMap = arg->asMap();
     YCPMap options = value->asMap();
-
 
     Cdata = getMapValueAsList ( options,"cdataSections" );
     ListEntries = getMapValueAsMap(options,"listEntries");
@@ -903,11 +905,7 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 					     (const xmlChar *)rootElement,
 					     NULL,
 					     (const xmlChar *)systemID);
-
-
 	newDoc = xmlCopyDoc (doc,1);
-
-
     }
     xmlIndentTreeOutput  = 1;
     xmlKeepBlanksDefault	(0);
@@ -919,13 +917,11 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 	result = YCPString((const char *)mem);
 
 	xmlFree(mem);
-
     }
     else
     {
 	result = YCPBoolean( xmlSaveFormatFile(filename, newDoc, 1) != -1 );
     }
-
     xmlFreeDoc(doc);
     if (strcmp(input,"string"))
     {

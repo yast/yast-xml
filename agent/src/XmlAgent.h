@@ -52,12 +52,19 @@ class XmlAgent : public SCRAgent
         /**
          * Provides SCR Write ().
          */
-        virtual YCPValue Write(const YCPPath &path, const YCPValue& value, const YCPValue& arg );
+        virtual YCPValue Execute(const YCPPath &path, const YCPValue& value, const YCPValue& arg );
 
         /**
          * Provides SCR Write ().
          */
         virtual YCPValue Dir(const YCPPath& path);
+
+        /**
+         * Provides SCR Write ().
+         */
+        virtual YCPValue Write(const YCPPath &path,
+			   const YCPValue& value,
+			   const YCPValue& arg = YCPNull());
 
         /**
          * Used for mounting the agent.
