@@ -6,8 +6,8 @@
 Summary:	-
 Requires:	libxml2
 Requires:	yast2
-Provides:	yast2-agent-xml yast2-lib-xml
-Obsoletes:	yast2-agent-xml yast2-lib-xml
+Provides:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
+Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 
 %description
 -
