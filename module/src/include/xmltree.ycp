@@ -92,44 +92,13 @@ define isWhite(string text) ``{
 }
 
 define cleanWhite(string text) ``{
+	import "String";
     list comp = filter(`d, splitstring(text, "\n"), ``(d!=""));
     string merged = mergestring(comp, " ");
-    return(CutBlanks(merged));
+    return(String::CutBlanks(merged));
 }
 
 
-define CutBlanks( string input )
-    ``{
-    string  output = input;
-    boolean go_on = true;
-
-    if ( size ( output ) > 0 )
-    {
-        integer pos = findfirstnotof( output, " " );
-
-        if ( pos != nil )
-        {
-        output = substring( output, pos );
-        }
-        integer last_pos = size ( output ) - 1;
-
-        while ( go_on )
-        {
-        if ( substring( output, last_pos ) == " " )
-        {
-            output = substring( output, 0, last_pos );
-            last_pos = last_pos-1;
-        }
-        else
-        {
-            go_on = false;
-        }
-        }
-    }
-    return output;
-    };
-
-/*
 
 list tree = SCR::Read (.xmltree, "/tmp/ref1");
 SCR::UnmountAgent(.xmltree);
