@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jul 16 02:01:11 CEST 2002 - nashif@suse.de
+
+- Dont set empty namespaces
+- 2.6.4
+
+-------------------------------------------------------------------
 Tue Jul  9 17:18:20 CEST 2002 - mvidner@suse.cz
 
 - Provide/Obsolete also yast2-agent-xml-devel
