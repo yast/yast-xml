@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Jul 29 18:04:46 CEST 2002 - nashif@suse.de
+
+- return error if parsing fails
+- 2.6.6
+
+-------------------------------------------------------------------
 Sat Jul 20 21:46:22 CEST 2002 - nashif@suse.de
 
 - use yast2-devel-packages
