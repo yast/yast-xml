@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Nov 11 20:46:10 CET 2003 - nashif@suse.de
+
+- Use doxygen
+- 2.9.1
+
+-------------------------------------------------------------------
 Tue Nov 11 04:19:21 CET 2003 - nashif@suse.de
 
 - changed xmlError function name to avoid collision 
