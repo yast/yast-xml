@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Aug  6 16:24:07 CEST 2003 - nashif@suse.de
+
+- #28439: Dont parse empty xml elements defined as list into empty strings..
+- 2.8.1
+
+-------------------------------------------------------------------
 Fri May 16 16:36:12 CEST 2003 - nashif@suse.de
 
 - Added missing files to files list
