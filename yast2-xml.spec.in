@@ -1,10 +1,12 @@
 @HEADER-COMMENT@
 
-# neededforbuild  autoconf automake gpp libgpp libscr libscr-devel libxcrypt libxcrypt-devel libxml2 libxml2-devel liby2 liby2-devel libycp libycp-devel ydoc
+# neededforbuild  autoconf automake gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-core yast2-core-devel yast2-devtools
 
 @HEADER@
 Summary:	-
 Requires:	libxml2
+Provides:	yast2-agent-xml
+Obsoletes:	yast2-agent-xml
 
 %description
 -

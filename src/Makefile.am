@@ -1,16 +1,15 @@
 #
-# Makefile.am for y2a_xml/src
+# Makefile.am for xml/src
 #
 
-
-AM_CXXFLAGS = -Wall # -g # -pedantic # -W
+AM_CXXFLAGS = -DY2LOG=\"agent-xml\"
 
 plugin_LTLIBRARIES = libpy2ag_xml.la
 noinst_LTLIBRARIES = liby2ag_xml.la
 
 liby2ag_xml_la_SOURCES =                    \
-	XmlAgent.cc		\
-	XmlAgent.h
+	XmlAgent.cc XmlAgent.h
+
 liby2ag_xml_la_LDFLAGS = -version-info 2:0
 libpy2ag_xml_la_LIBADD = $(LIBXMLPP_LIBS) $(XML_LIBS)
 
@@ -20,7 +19,4 @@ libpy2ag_xml_la_SOURCES =                           \
         Y2XmlAgentComponent.cc  Y2XmlAgentComponent.h
 libpy2ag_xml_la_LDFLAGS = -version-info 2:0
 
-
-
 INCLUDES = -I$(includedir) $(LIBXMLPP_CFLAGS) $(XML_CFLAGS)
-

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jun 24 16:02:34 CEST 2002 - arvin@suse.de
+
+- renamed to yast2-xml
+
+-------------------------------------------------------------------
 Sat May 18 15:24:06 EDT 2002 - nashif@suse.de
 
 - handle error message correctly

@@ -1,5 +1,5 @@
 #
-# Makefile.am for yast2 agent testsuite
+# Makefile.am for xml/testsuite
 #
 
 AUTOMAKE_OPTIONS = dejagnu

@@ -1,7 +1,5 @@
 #
-# Makefile.am for y2a_xml/doc
-#
-# $Id$
+# Makefile.am for xml/doc
 #
 
 SUBDIRS = autodocs

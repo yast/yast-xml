@@ -1,5 +1,5 @@
 #
-# Makefile.am for y2a_xml/conf
+# Makefile.am for xml/conf
 #
 
 scrconf_DATA = xml.scr
