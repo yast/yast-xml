@@ -911,10 +911,7 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     }
     else
     {
-	
-	
-	xmlSaveFormatFile(filename, newDoc,1);
-	result = YCPBoolean(true);
+	result = YCPBoolean( xmlSaveFormatFile(filename, newDoc, 1) != -1 );
     }
     
     xmlFreeDoc(doc);
