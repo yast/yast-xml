@@ -1,0 +1,48 @@
+/**
+ * File:
+ *   xml.scr
+ *
+ * Summary:
+ *   YaST2 SCR: Xml agent implementation
+ *
+ * Access:
+ *   read/write/execute OR read-only OR execute-only
+ *   
+ * Authors:
+ *   Anas Nashif <nashif@suse.de>
+ *
+ * See:
+ *   anyagent
+ *   libscr
+ *   man MANPAGE
+ *   info INFOPAGE
+ *   /usr/share/doc/packages/yast2-agent-xml/xml.html
+ *
+ * Example:
+ *   Read(.xml, "<XML file path>")
+ *   (["WHAT", "EVER", "YOU", "GET"])
+ *
+ *   Write(.xml,$[  
+ *		    "CDATA":["source"], 
+ *		    "SystemID":"testmap", 
+ *		    "rootElement":"testmap", 
+ *		    "fileName":"testmap.xml",
+ *		    "DocType":"testmap",  
+ *		    "NameSpace":"http://www.suse.com/1.0/yast2ns" 
+ *	         ], 
+ *		 $[
+ *		    "testkey":"testvalue"
+ *		 ]
+ *	  );
+ *   Write testmap.xml with data from supplied map. Values mentioned in 
+ *   CDATA list are treated as XML CDATA (i.e. source code).
+ * 
+ * $Id$
+ *
+ * SOME USEFUL INFORMATION ON THE AGENT
+ */
+.xml
+
+`ag_xml(
+  XmlAgent()
+)

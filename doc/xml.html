@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE>XML agent description</TITLE>
+<!-- $Id$ -->
+</HEAD>
+<BODY>
+<H1>XML agent description</H1>
+<HR>
+
+<H2>Purpose</H2> 
+The XML agent (<TT>ag_XML</TT>) is used to access to create XML documents from
+YCP data structures and also read XML files into YCP.
+It is part of YaST2 SCR, the system configuration repository,
+used to access configuration data on the target system. The general
+SCR API allows <TT>Read()</TT> and <TT>Write()</TT> access to get and
+change data.
+
+<P>
+<H2>Implementation</H2>
+The agent is implemented using the XML extensions of the Qt library. Parsing and
+creating the documents is done using the DOM classes of the Qt library.
+<P>
+<I><B>Note:</B> The complete development documentation is available in the
+<A HREF="autodocs/index.html"><TT>autodocs/</TT></A> directory.</I>
+
+<P>
+<H2>Interface for XML-agent</H2>
+The interface is implemented as a SCR agent with the usual <TT>Read()</TT>
+and <TT>Write()<TT> interfaces. The path prefix used is
+
+<UL><TT>.xml</TT></UL>
+
+<P>
+<H2>Restrictions, limits and future enhancements</H2>
+<TT>...</TT>
+
+<P>
+See the <A HREF="TODO.txt">TODO.txt</A> file for the current status of support
+and also for the list of possible future enhancements.
+
+<P>
+<H2>Read options</H2>
+To read an XML file into ycp, the following syntax is required:
+<br>
+Read(.xml,"<file_name>");
+
+<H2>Write options</H2>
+To write an XML file into ycp, the following syntax is required:
+<br>
+Write(.xml,$[&lt;options map&gt;], $[ycp data]);
+<p>
+The options map contains the following data:
+<ul>
+<li>"CDATA": A List containing sections that should be treated as CDATA (i.e. source code)
+<li>"DocType": Document Type 
+<li>"rootElement": Root Element of the XML document
+<li>"SystemID": still not supported
+<li>"PublicID": still not supported 
+<li>"fileName": filename in which the data should be stored (as XML)
+<li>"NameSpace": still not supported
+</ul>
+
+
+<P>
+<ADDRESS>
+Anas Nashif &lt;nashif@suse.de&gt;<BR>
+</ADDRESS>
+
+
+</BODY>
+</HTML>

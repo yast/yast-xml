@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE profile SYSTEM "/usr/lib/YaST2/include/profile.dtd">
+<profile xmlns="http://www.suse.com/1.0/profilens" xmlns:config="http://www.suse.com/1.0/configns">
+	<install>
+		<general>
+			<keyboard>english-us</keyboard>
+			<language>en_US</language>
+			<timezone>US/Eastern</timezone>
+			<popup_timeout config:type="integer">2</popup_timeout>
+		</general>
+		<lilo>
+			<lilo>mbr</lilo>
+			<boot_mode>lilo</boot_mode>
+			<boot_device>/dev/hdb</boot_device>
+			<lilo_device>/dev/hdb1</lilo_device>
+		</lilo>
+		<targets>
+			<target_is>/dev/hdb</target_is>
+			<auto_partitioning config:type="boolean">true</auto_partitioning>
+			<reuse_all config:type="boolean">true</reuse_all>
+		</targets>
+		<software>
+			<selections config:type="list">
+				<selection>Minimal+X11</selection>
+			</selections>
+			<packages config:type="list">
+				<package>aalib</package>
+			</packages>
+		</software>
+	</install>
+	<configure>
+		<users config:type="list">
+			<user>
+				<login>root</login>
+				<password>XX</password>
+				<encrypted config:type="boolean">false</encrypted>
+			</user>
+			<user>
+				<type>primary</type>
+				<first_name>Anas</first_name>
+				<last_name>Nashif</last_name>
+				<login>nashif</login>
+				<password>X</password>
+				<encrypted config:type="boolean">false</encrypted>
+			</user>
+		</users>
+		<netdevs config:type="list">
+			<device>
+				<number config:type="integer">0</number>
+				<netdev>eth0</netdev>
+				<module_name>via-rhine</module_name>
+				<module_options/>
+				<ip>192.168.1.100</ip>
+				<netmask>255.255.255.0</netmask>
+				<dhcp config:type="boolean">false</dhcp>
+			</device>
+		</netdevs>
+		<dns>
+			<host>ay1</host>
+			<nameserver>192.168.1.1 192.168.1.2</nameserver>
+			<searchlist>suse.de</searchlist>
+			<domain>suse.de</domain>
+			<dhclient_set_hostname config:type="boolean">false</dhclient_set_hostname>
+		</dns>
+		<route config:type="list">
+			<route_entry>
+				<destination>default</destination>
+				<device>eth0</device>
+				<gateway>192.168.1.1</gateway>
+				<netmask>255.255.255.0</netmask>
+			</route_entry>
+		</route>
+		<sendmail>
+			<configuration>expert</configuration>
+			<!--  Valid options for configuration: permanent, single, temporal, uucp, expert(options required), no -->
+			<options>
+				<localhost/>
+				<smarthost/>
+				<relay/>
+				<sendmail_args/>
+				<generics_domain/>
+				<masquerade_domains/>
+				<from_header/>
+				<expensive config:type="boolean"/>
+				<smtp config:type="boolean"/>
+				<nocanonify config:type="boolean"/>
+			</options>
+		</sendmail>
+		<nfs config:type="list">
+			<nfs_entry>
+				<server_path>192.168.1.1:/tftpboot</server_path>
+				<mount_point>/space</mount_point>
+				<options>defaults</options>
+			</nfs_entry>
+		</nfs>
+		<nis>
+			<domain>nashif.com</domain>
+			<address>192.168.1.1</address>
+		</nis>
+		<pre-scripts config:type="list">
+			<script>
+				<name>mountlog.sh</name>
+				<order config:type="integer">0</order>
+				<interpreter>shell</interpreter>
+				<source><![CDATA[#!/bin/sh 
+echo "Mounting Logs" 
+exit 0]]></source>
+			</script>
+		</pre-scripts>
+		<post-scripts config:type="list">
+			<script>
+				<name>start.sh</name>
+				<order config:type="integer">0</order>
+				<interpreter>shell</interpreter>
+				<source><![CDATA[#!/bin/sh 
+echo "Starting installation" 
+exit 0]]></source>
+			</script>
+		</post-scripts>
+		<post-packages config:type="list">
+			<package>alice</package>
+		</post-packages>
+	</configure>
+</profile>

@@ -1,0 +1,10 @@
+This is a TODO file for the XML SCR agent.
+----------------------------------------------
+$Id$
+
+TODO:
+-----
+
+- Create Document Type Definition
+- Add Namespaces
+

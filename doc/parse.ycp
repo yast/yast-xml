@@ -1,0 +1,10 @@
+{
+    // An example for Writing XML files using YCP data
+    map probe = SCR::Read(.target.ycp, "/var/lib/YaST2/infomap.ycp");
+    SCR::Write(.xml, $[ "SystemID":"infomap",  // not used yet
+			    "rootElement":"infomap", 
+			    "fileName":"infomap.xml",
+			    "DocType":"infomap",  // not used yet
+			    "NameSpace":"http://www.suse.com/1.0/yast2ns" // not used yet
+			    ], probe);
+}

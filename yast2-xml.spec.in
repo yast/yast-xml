@@ -1,0 +1,39 @@
+@HEADER-COMMENT@
+
+# neededforbuild  autoconf automake gpp libgpp libscr libscr-devel libxcrypt libxcrypt-devel libxml2 libxml2-devel liby2 liby2-devel libycp libycp-devel ydoc
+
+@HEADER@
+Summary:	-
+Requires:	libxml2
+
+%description
+-
+
+@HEADER-DEVEL@
+Summary:	-
+
+%description devel
+-
+
+@PREP@
+
+@BUILD-PROGRAM@
+
+@INSTALL-PROGRAM@
+
+@CLEAN@
+
+%files
+%defattr(-,root,root)
+%dir @plugindir@
+@plugindir@/libpy2ag_xml.so.*
+%dir @scrconfdir@
+@scrconfdir@/*.scr
+
+%files devel
+%defattr(-,root,root)
+%dir @plugindir@
+@plugindir@/libpy2ag_xml.so
+@plugindir@/libpy2ag_xml.la
+%docdir @docdir@
+%doc @docdir@/*

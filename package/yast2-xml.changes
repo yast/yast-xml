@@ -1,0 +1,55 @@
+-------------------------------------------------------------------
+Sat May 18 15:24:06 EDT 2002 - nashif@suse.de
+
+- handle error message correctly
+- implemented XInclude for inclusion of external/remote entities
+- 2.6.2
+
+-------------------------------------------------------------------
+Tue May  7 13:15:22 EDT 2002 - nashif@suse.de
+
+- Use libxml2 instead of qt XML exensions
+- Parse basic XML-RPC Requests
+- Return XML string instead of writing files only
+
+-------------------------------------------------------------------
+Mon Apr  8 13:30:52 CEST 2002 - nashif@suse.de
+
+- Fixed to compile with gcc3.1
+- 2.6.0
+
+-------------------------------------------------------------------
+Sun Jan 20 10:08:05 EST 2002 - nashif@suse.de
+
+- 2.5.6
+- Handle empty lists
+
+-------------------------------------------------------------------
+Mon Jan 14 02:43:52 EST 2002 - nashif@suse.de
+
+- Version 2.5.5
+- Save YCP Symbol correctly
+
+-------------------------------------------------------------------
+Tue Jan  8 21:52:08 CET 2002 - nashif@suse.de
+
+- added qt3-non-mt to neededforbuild
+
+-------------------------------------------------------------------
+Thu Jan  3 19:17:21 EST 2002 - nashif@suse.de
+
+- Version 2.5.3
+- Changed neededforbuild to use qt3
+
+-------------------------------------------------------------------
+Fri Dec 14 15:13:14 CET 2001 - nashif@suse.de
+
+- Version 2.5.2
+- Use qt3 if avialble
+- Removed unneeded warning messages
+
+-------------------------------------------------------------------
+Tue Oct 30 05:55:07 2001 - nashif@suse.de
+
+- Initial version
+
