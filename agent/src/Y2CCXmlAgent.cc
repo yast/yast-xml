@@ -10,6 +10,17 @@
  * $Id$
  */
 
+#include <scr/Y2AgentComponent.h>
+#include <scr/Y2CCAgentComponent.h>
+
+#include "XmlAgent.h"
+
+
+typedef Y2AgentComp <XmlAgent> Y2XmlAgentComp;
+
+Y2CCAgentComp <Y2XmlAgentComp> g_y2ccag_xml ("ag_xml");
+
+/*
 #include "Y2CCXmlAgent.h"
 #include "Y2XmlAgentComponent.h"
 
@@ -35,4 +46,4 @@ Y2CCXmlAgent::create(const char *name) const
 }
 
 
-Y2CCXmlAgent g_y2ccag_xml;
+Y2CCXmlAgent g_y2ccag_xml;*/

@@ -15,8 +15,7 @@ libpy2ag_xml_la_LIBADD = $(LIBXMLPP_LIBS) $(XML_LIBS)
 
 libpy2ag_xml_la_SOURCES =                           \
         $(liby2ag_xml_la_SOURCES)                   \
-        Y2CCXmlAgent.cc         Y2CCXmlAgent.h  \
-        Y2XmlAgentComponent.cc  Y2XmlAgentComponent.h
+        Y2CCXmlAgent.cc
 libpy2ag_xml_la_LDFLAGS = -version-info 2:0
 
 INCLUDES = -I$(includedir) $(LIBXMLPP_CFLAGS) $(XML_CFLAGS)
