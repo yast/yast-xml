@@ -1,6 +1,6 @@
 @HEADER-COMMENT@
 
-# neededforbuild  gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-devel-packages
+# neededforbuild  gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-devtools liby2util liby2util-devel yast2-core yast2-core-devel yast2-packagemanager doxygen libpng perl-XML-Writer openslp curl
 
 @HEADER@
 Summary:	-
