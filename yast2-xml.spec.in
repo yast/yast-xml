@@ -5,7 +5,7 @@
 @HEADER@
 Summary:	-
 Requires:	libxml2
-Requires:	yast2 yast2-curl
+Requires:	yast2
 Provides:	yast2-agent-xml yast2-lib-xml
 Obsoletes:	yast2-agent-xml yast2-lib-xml
 
@@ -27,6 +27,6 @@ Obsoletes:	yast2-agent-xml yast2-lib-xml
 @plugindir@/libpy2ag_xml.la
 @scrconfdir@/*.scr
 %dir @yncludedir@/xml
-@yncludedir@/xml/*
+#@yncludedir@/xml/*
 @moduledir@/XML.ycp
 %doc @docdir@
