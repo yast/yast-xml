@@ -68,7 +68,7 @@
 	map docSettings = docs[docType]:$[];
 	docSettings["fileName"] = outputPath;
 	y2debug("Write(.xml, %1, %2)", docSettings, contents);
-	boolean ret = SCR::Execute(.xml, docSettings, contents);
+	boolean ret = (boolean) SCR::Execute(.xml, docSettings, contents);
 	return ret;
     }
 
@@ -84,7 +84,7 @@
 
 	map docSettings = docs[docType]:$[];
 	docSettings["fileName"] = "dummy";
-	string ret = SCR::Execute(.xml.string, docSettings, contents);
+	string ret = (string) SCR::Execute(.xml.string, docSettings, contents);
 	return ret;
     }
 
