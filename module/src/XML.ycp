@@ -107,12 +107,13 @@
      * @return map Map with YCP data
      */
     
-    global define map XMLToYCPFile( string xmlFile) ``{
+    global define  XMLToYCPFile( string xmlFile) ``{
 	
 	if (SCR::Read(.target.size, xmlFile) > 0)
 	{
 	    y2milestone("Reading %1", xmlFile);
-	    map out = SCR::Read(.xml, xmlFile);
+	    any out = SCR::Read(.xml, xmlFile);
+	    y2milestone("XML Agent output: %1", out);
 	    return (out);
 	}
 	else
