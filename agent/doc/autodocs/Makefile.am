@@ -1,11 +1,13 @@
 #
-# Makefile.am for xml/agent/doc/autodocs
+# Makefile.am for liby2util/doc/autodocs
 #
 
 htmldir = $(docdir)/autodocs
 
-html_DATA = index.html $(wildcard *.html)
-CLEANFILES = $(html_DATA)
+html_DATA = index.html $(wildcard *.html *.png) doxygen.css @RPMNAME@.tag
 
-index.html: $(srcdir)/../../src/*.h
-	@ybindir@/ydoc agent-xml -l libycp -l liby2 -l libscr --url $(htmldir) $^
+CLEANFILES = $(html_DATA) doxygen.log
+
+header_dir = $(srcdir)/../../src/
+index.html: $(header_dir)/*.h 
+	@ybindir@/ydoxygen PROJECT_NAME=@RPMNAME@ TAGFILES=
