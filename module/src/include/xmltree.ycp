@@ -1,0 +1,146 @@
+{
+
+define checkList(list con) ``{
+    list noAttr = remove(con,0);
+    list tmp = noAttr;
+
+    string last = "";
+    boolean isList = true;
+    integer pos = 0;
+    foreach(`c, noAttr, ``{
+	if (is(c, integer) && c == 0) {
+	    tmp = remove(tmp, pos);
+	    tmp = remove(tmp, pos );
+	    pos = pos - 1 ;
+	}
+	else if (is(c, list)) {
+	    tmp = remove(tmp, pos);
+	}
+	else
+	{
+	    pos = pos + 1;
+	}
+    });
+    if (size(tmp)> 0 && select(toset(tmp),0, "") == select(tmp,1, ""))
+	return  (select(toset(tmp),0, ""));
+    else
+	return ("");
+}
+
+define getNode(list con) ``{
+
+    integer  pos = 0;
+    boolean jump = false;
+    list new = [];
+    foreach(`node, con, ``{
+	if (!jump) {
+	    if (is(node, integer) && node == 0)
+	    {
+		type= "TextNode";
+	    }
+	    else if (is(node,map))
+	    {
+		type = "AttributeNode";
+		new = add(new, node);
+	    }
+	    else if (type!="TextNode")
+	    {
+		type= "ElementNode";
+		new = add(new, node);
+	    }
+	    else
+	    {
+		type= "Text";
+		if (!isWhite(node) )
+		{
+		    new = add(new, 0);
+		    if (cleanNewLines)
+		    {
+			new = add(new,cleanWhite(node));
+		    }
+		    else
+		    {
+			new = add(new, node);
+		    }
+		}
+	    }
+
+	    //y2milestone("type: %1 -> %2", type, node);
+	    if (type == "ElementNode")
+	    {
+		y2milestone("Element node");
+		new = add(new, getNode(con[pos + 1]:[]));
+		jump = true;
+	    }
+	}
+	else {
+	    jump = false;
+	}
+
+
+	pos = pos + 1;
+
+    });
+    return (new);
+
+}
+
+define isWhite(string text) ``{
+    list comp = filter(`d, splitstring(text, "\n"), ``(d!=""));
+    string merged = mergestring(comp, "");
+    return(size(deletechars(merged, " ")) == 0);
+}
+
+define cleanWhite(string text) ``{
+    list comp = filter(`d, splitstring(text, "\n"), ``(d!=""));
+    string merged = mergestring(comp, " ");
+    return(CutBlanks(merged));
+}
+
+
+define CutBlanks( string input )
+    ``{
+    string  output = input;
+    boolean go_on = true;
+
+    if ( size ( output ) > 0 )
+    {
+        integer pos = findfirstnotof( output, " " );
+
+        if ( pos != nil )
+        {
+        output = substring( output, pos );
+        }
+        integer last_pos = size ( output ) - 1;
+
+        while ( go_on )
+        {
+        if ( substring( output, last_pos ) == " " )
+        {
+            output = substring( output, 0, last_pos );
+            last_pos = last_pos-1;
+        }
+        else
+        {
+            go_on = false;
+        }
+        }
+    }
+    return output;
+    };
+
+/*
+
+list tree = SCR::Read (.xmltree, "/tmp/ref1");
+SCR::UnmountAgent(.xmltree);
+string type = "";
+
+string rootElement = tree[0]:"";
+list   contents = tree[1]:[];
+boolean cleanNewLines = true;
+
+
+y2milestone("Clean: %1", getNode(contents));
+*/
+
+}

@@ -10,7 +10,7 @@
 
 {
     /**
-     * Send a XML-RPC request to a given server 
+     * Send a XML-RPC request to a given server
      * @param endpoint Server address as a HTTP URL
      * @param methodName method to call on server
      * @param params A list of parameters for the method
@@ -18,7 +18,7 @@
      *
      * @return A map with the methodResponse or a fault response with fault code and faultString.
      */
-    
+
     global define map methodCall(
 			     string endpoint,
 			     string methodName,
@@ -39,6 +39,6 @@
 	return methodResponse;
     }
 
-    
-    
+
+
 }
