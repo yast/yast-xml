@@ -1,6 +1,6 @@
 {
 
-define checkList(list con) ``{
+define string checkList(list con) ``{
     list noAttr = remove(con,0);
     list tmp = noAttr;
 
@@ -22,12 +22,12 @@ define checkList(list con) ``{
 	}
     });
     if (size(tmp)> 0 && select(toset(tmp),0, "") == select(tmp,1, ""))
-	return  (select(toset(tmp),0, ""));
+	return  (string) select(toset(tmp),0, "");
     else
-	return ("");
+	return "";
 }
 
-define getNode(list con) ``{
+define list getNode(list con) ``{
 
     integer  pos = 0;
     boolean jump = false;
@@ -81,26 +81,26 @@ define getNode(list con) ``{
 	pos = pos + 1;
 
     });
-    return (new);
+    return new;
 
 }
 
-define isWhite(string text) ``{
+define boolean isWhite(string text) ``{
     list comp = filter(`d, splitstring(text, "\n"), ``(d!=""));
     string merged = mergestring(comp, "");
-    return(size(deletechars(merged, " ")) == 0);
+    return size(deletechars(merged, " ")) == 0;
 }
 
-define cleanWhite(string text) ``{
-	import "String";
+define string cleanWhite(string text) ``{
+    import "String";
     list comp = filter(`d, splitstring(text, "\n"), ``(d!=""));
     string merged = mergestring(comp, " ");
-    return(String::CutBlanks(merged));
+    return String::CutBlanks(merged);
 }
 
 
 
-list tree = SCR::Read (.xmltree, "/tmp/ref1");
+list tree = (list) SCR::Read (.xmltree, "/tmp/ref1");
 SCR::UnmountAgent(.xmltree);
 string type = "";
 

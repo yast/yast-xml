@@ -1,14 +1,14 @@
 /**
- * Module:		XML.ycp
- *
- * Authors:		Anas Nashif (nashif@suse.de)
- *
- * Purpose:		XML
+ * File:	modules/XML.ycp
+ * Package:	XML
+ * Summary:	XML routines
+ * Authors:	Anas Nashif <nashif@suse.de>
  *
  * $Id$
  */
 
 {
+
     module "XML";
 
     // Sections in XML file that should be treated as CDATA when saving
@@ -34,19 +34,10 @@
 
 
     /**
-     * Constructor
-     */
-    define void XML() ``{
-	return;
-    }
-
-
-    /**
      * define a new doc type with custom settings, if not defined, global settings will
      * be used.
      * @return void
      */
-
     global define void xmlCreateDoc(symbol doc, map docSettings)
 	``{
 	map current_settings = $[
@@ -71,15 +62,13 @@
      */
     global define boolean YCPToXMLFile(symbol docType, map contents, string outputPath) ``{	
 	if (!haskey(docs, docType)) {
-		y2error("doc type %1 undecalred...", docType);
+	    y2error("doc type %1 undecalred...", docType);
 	    return false;
-    }
+	}
 	map docSettings = docs[docType]:$[];
 	docSettings["fileName"] = outputPath;
 	y2debug("Write(.xml, %1, %2)", docSettings, contents);
-	boolean ret = SCR::Write(.xml,
-				 docSettings,
-				 contents);
+	boolean ret = SCR::Write(.xml, docSettings, contents);
 	return ret;
     }
 
@@ -91,33 +80,31 @@
      */
     global define string YCPToXMLString(symbol docType, map contents) ``{
 	if (!haskey(docs, docType))
-	    return false;
+	    return nil;
 
 	map docSettings = docs[docType]:$[];
 	docSettings["fileName"] = "dummy";
-	string ret = SCR::Write(.xml.string,
-				docSettings,
-				 contents);
+	string ret = SCR::Write(.xml.string, docSettings, contents);
 	return ret;
     }
 
     /**
      * Read XML file into YCP
      * @param xmlFile XML file name to read
-     * @return map Map with YCP data
+     * @return Map with YCP data
      */
-    global define  XMLToYCPFile( string xmlFile) ``{
+    global define map XMLToYCPFile( string xmlFile) ``{
 	if (SCR::Read(.target.size, xmlFile) > 0)
 	{
 	    y2milestone("Reading %1", xmlFile);
-	    any out = SCR::Read(.xml, xmlFile);
+	    map out = (map) SCR::Read(.xml, xmlFile);
 	    y2debug("XML Agent output: %1", out);
-	    return (out);
+	    return out;
 	}
 	else
 	{
 	    y2warning("XML file %1 (%2) not found", xmlFile, SCR::Read(.target.size, xmlFile));
-	    return ($[]);
+	    return $[];
 	}
     }
 
