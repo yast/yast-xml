@@ -1,5 +1,6 @@
 @HEADER-COMMENT@
-# neededforbuild gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-core yast2-core-devel yast2-devtools
+
+# neededforbuild  gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-core yast2-core-devel yast2-devtools
 
 @HEADER@
 Summary:	-
@@ -13,9 +14,9 @@ Obsoletes:	yast2-agent-xml yast2-lib-xml
 
 @PREP@
 
-@BUILD-PROGRAM@
+@BUILD@
 
-@INSTALL-PROGRAM@
+@INSTALL@
 
 @CLEAN@
 
