@@ -3,4 +3,4 @@
 #
 scrconf_DATA = $(wildcard *.scr)
 
-EXTRA_DIST = $(scrconf_DATA) $(agent_SCRIPTS)
+EXTRA_DIST = $(scrconf_DATA) 
