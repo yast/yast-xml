@@ -53,10 +53,13 @@
 				 "cdataSections":docSettings["cdataSections"]:cdataSections,
 				 "systemID":docSettings["systemID"]:systemID,
 				 "rootElement":docSettings["rootElement"]:rootElement,
-				 "listEntries": docSettings["listEntries"]:listEntries,			
-				 "nameSpace":docSettings["nameSpace"]:nameSpace,
-				 "typeNamespace":docSettings["typeNamespace"]:typeNamespace
+				 "listEntries": docSettings["listEntries"]:listEntries
 	];
+	if (docSettings["typeNamespace"]:""!= "")
+	    current_settings["typeNamespace"] = docSettings["typeNamespace"]:"";
+
+	if (docSettings["nameSpace"]:""!= "")
+	    current_settings["nameSpace"] = docSettings["nameSpace"]:"";	
 	docs[doc] = current_settings;
 	return;
     }
@@ -105,13 +108,18 @@
      */
     
     global define map XMLToYCPFile( string xmlFile) ``{
-	y2milestone("Trying to read %1", xmlFile);
-	if (SCR::Read(.target.size, xmlFile)>0) {
-	    return SCR::Read(.xml, xmlFile);
-	} else {
-	    return ($[]);
 	
+	if (SCR::Read(.target.size, xmlFile) > 0)
+	{
+	    y2milestone("Reading %1", xmlFile);
+	    map out = SCR::Read(.xml, xmlFile);
+	    return (out);
+	}
+	else
+	{
+	    y2warning("XML file %1 (%2) not found", xmlFile, SCR::Read(.target.size, xmlFile));
+	    return ($[]);	
 	}
     }
-        
+
 }

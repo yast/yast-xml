@@ -875,8 +875,14 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     {
 	xmlNodePtr root = xmlNewDocNode(doc, NULL, (const xmlChar *)rootElement, NULL);
 	
+	if ( nameSpace != "")
+	{
 	xmlNewNs (root,  (const xmlChar *)nameSpace, NULL);
+	}
+
+	if ( typeNS!="") {
 	configNamespace = xmlNewNs (root,  (const xmlChar *)typeNS, (const xmlChar *)"config");
+	}
 
 	  
 	doc->children = ParseYCPMap(argMap, root, doc);
