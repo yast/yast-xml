@@ -47,10 +47,14 @@
 				 "listEntries": docSettings["listEntries"]:listEntries
 	];
 	if (docSettings["typeNamespace"]:""!= "")
+	{
 	    current_settings["typeNamespace"] = docSettings["typeNamespace"]:"";
+	}
 
 	if (docSettings["nameSpace"]:""!= "")
+	{
 	    current_settings["nameSpace"] = docSettings["nameSpace"]:"";
+	}
 	docs[doc] = current_settings;
 	return;
     }
@@ -61,7 +65,8 @@
      * @return boolean true on sucess
      */
     global define boolean YCPToXMLFile(symbol docType, map contents, string outputPath) ``{	
-	if (!haskey(docs, docType)) {
+	if (!haskey(docs, docType))
+	{
 	    y2error("doc type %1 undecalred...", docType);
 	    return false;
 	}
@@ -87,6 +92,7 @@
 	string ret = (string) SCR::Execute(.xml.string, docSettings, contents);
 	return ret;
     }
+    
 
     /**
      * Read XML file into YCP
