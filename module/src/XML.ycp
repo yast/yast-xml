@@ -36,6 +36,8 @@
     /**
      * define a new doc type with custom settings, if not defined, global settings will
      * be used.
+	 * @param symbol Document type identifier
+	 * @param map  Document type Settings
      * @return void
      */
     global define void xmlCreateDoc(symbol doc, map docSettings)
@@ -59,7 +61,10 @@
 	return;
     }
 
-    /** Write YCP data into formated XML file
+    /**
+	 * YCPToXMLFile()
+	 * Write YCP data into formated XML file
+	 * @param symbol Document type identifier
      * @param contents  a map with YCP data
      * @param outputPath the path of the XML file
      * @return boolean true on sucess
@@ -80,6 +85,7 @@
 
 
     /** Write YCP data into formated XML string
+	 *  @param symbol Document type identifier
      *  @param contents  a map with YCP data
      *  @return string String with XML data
      */
@@ -92,7 +98,6 @@
 	string ret = (string) SCR::Execute(.xml.string, docSettings, contents);
 	return ret;
     }
-    
 
     /**
      * Read XML file into YCP
