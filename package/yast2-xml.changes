@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sat Jan 24 20:37:55 CET 2004 - nashif@suse.de
+
+- Updates for new interpreter
+- removed obsoleted perl agents and relevant ycp files
+- 2.9.2
+
+-------------------------------------------------------------------
 Tue Nov 11 20:46:10 CET 2003 - nashif@suse.de
 
 - Use doxygen
