@@ -15,6 +15,7 @@
 
 #include <Y2.h>
 #include <scr/SCRAgent.h>
+#include <scr/SCRInterpreter.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/parserInternals.h>
@@ -46,9 +47,7 @@ class XmlAgent : public SCRAgent
          * @param path Path that should be read.
          * @param arg Additional parameter.
          */
-        virtual YCPValue Read(const YCPPath &path,
-	    const YCPValue& arg=YCPNull (),
-	    const YCPValue& opt = YCPNull());
+        virtual YCPValue Read(const YCPPath &path, const YCPValue& arg=YCPNull ());
 
         /**
          * Provides SCR Write ().

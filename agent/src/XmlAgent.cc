@@ -59,7 +59,7 @@ YCPValue XmlAgent::SetType(xmlNodePtr node) {
     else if (!xmlStrcmp(confAttr, (const xmlChar *)"symbol"))
     {
 	y2debug("Symbol found");
-	YCPSymbol sym((const char *)lastChild->content);
+	YCPSymbol sym((const char *)lastChild->content, false);
 	return  (YCPSymbol(sym));
     }
     else if (!xmlStrcmp(confAttr, (const xmlChar *)"integer")  )
@@ -678,7 +678,7 @@ xmlagentError(void *ctx, const char *msg, ...)
 /**
  * Read
  */
-YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPValue& opt )
+YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 {
 
     string content;
@@ -947,7 +947,7 @@ YCPValue XmlAgent::Dir(const YCPPath& path)
  */
 YCPValue XmlAgent::otherCommand(const YCPTerm& term)
 {
-    string sym = term->name();
+    string sym = term->symbol()->symbol();
 
     if (sym == "XmlAgent") {
         /* Your initialization */
