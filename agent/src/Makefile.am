@@ -19,4 +19,4 @@ libpy2ag_xml_la_SOURCES =                           \
 libpy2ag_xml_la_LDFLAGS = -version-info 2:0
 libpy2ag_xml_la_LIBADD = @AGENT_LIBADD@ $(LIBXMLPP_LIBS) $(XML_LIBS)
 
-INCLUDES = -I$(includedir) $(LIBXMLPP_CFLAGS) $(XML_CFLAGS)
+INCLUDES = -I$(includedir) $(XML_CPPFLAGS)
