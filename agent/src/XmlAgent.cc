@@ -308,11 +308,6 @@ YCPValue XmlAgent::getValue( xmlNodePtr paramNode)
 }
 
 
-
-
-
-
-
 YCPList XmlAgent::getParams (xmlNodePtr paramsNode)
 {
     YCPList params;
@@ -569,6 +564,7 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
 	}
         else
         {
+            y2debug("break");
             break;
         }
     }
@@ -590,6 +586,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	    xmlNewChild(parent, NULL,
 			(const xmlChar *)(const xmlChar *)i.key()->asString()->value().c_str(),
 			(const xmlChar *)i.value()->asString()->value().c_str());
+            continue;
 	}
 
 	if (i.value()->isString() &&  isCDATA(i.key()->asString()))
@@ -602,9 +599,6 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 						      (const xmlChar *)i.value()->asString()->value().c_str(),
 						      strlen(i.value()->asString()->value().c_str()));
 	    xmlAddChild(cdataNode,cdataBlock);
-
-
-
 	}
 	else if (i.value()->isInteger())
 	{
@@ -652,6 +646,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	}
         else
         {
+            y2debug("break");
             break;
         }
 
