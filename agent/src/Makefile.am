@@ -1,5 +1,5 @@
 #
-# Makefile.am for xml/src
+# Makefile.am for xml/agent/src
 #
 
 AM_CXXFLAGS = -DY2LOG=\"agent-xml\"

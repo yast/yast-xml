@@ -1,5 +1,5 @@
 #
-# Makefile.am for bootloader/lilo
+# Makefile.am for xml/module
 #
 
 SUBDIRS = doc src

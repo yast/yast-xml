@@ -1,6 +1,7 @@
 #
-# Makefile.am for y2m_autoinst/src/include
+# Makefile.am for xml/module/src/include
 #
+
 yincludedir = $(YAST2DIR)/include/xml
 yinclude_HEADERS = $(wildcard *.ycp)
 

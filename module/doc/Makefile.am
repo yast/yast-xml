@@ -1,5 +1,6 @@
 #
-# Makefile.am for y2c_xml/doc
+# Makefile.am for xml/module/doc
+#
 
 SUBDIRS = autodocs
 

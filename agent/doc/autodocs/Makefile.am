@@ -1,5 +1,5 @@
 #
-# Makefile.am for y2a_xml/doc/autodocs
+# Makefile.am for xml/agent/doc/autodocs
 #
 
 htmldir = $(docdir)/autodocs

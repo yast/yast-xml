@@ -1,5 +1,5 @@
 #
-# Makefile.am for xml/conf
+# Makefile.am for xml/agent/conf
 #
 
 scrconf_DATA = xml.scr

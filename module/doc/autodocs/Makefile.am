@@ -1,7 +1,5 @@
 #
-# Makefile.am for y2c_xml/doc/autodocs
-#
-# $Id$
+# Makefile.am for xml/module/doc/autodocs
 #
 
 htmldir = $(docdir)/autodocs

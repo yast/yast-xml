@@ -1,5 +1,5 @@
 #
-# Makefile.am for y2a_xml/doc
+# Makefile.am for xml/agent/doc
 #
 
 SUBDIRS = autodocs
