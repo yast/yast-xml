@@ -110,6 +110,5 @@ boolean cleanNewLines = true;
 
 
 y2milestone("Clean: %1", getNode(contents));
-*/
 
 }
