@@ -69,7 +69,7 @@
      * @param outputPath the path of the XML file
      * @return boolean true on sucess
      */
-    global define boolean YCPToXMLFile(symbol docType, map contents, string outputPath) ``{	
+    global define boolean YCPToXMLFile(symbol docType, map contents, string outputPath) ``{
 	if (!haskey(docs, docType))
 	{
 	    y2error("doc type %1 undecalred...", docType);
