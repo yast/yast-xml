@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Jul  4 13:15:31 EDT 2002 - nashif@suse.de
+
+- Dont require yast2-curl
+- xmlrpc feature not currently used
+
+-------------------------------------------------------------------
 Mon Jun 24 16:02:34 CEST 2002 - arvin@suse.de
 
 - renamed to from yast2-agent-xml to yast2-xml and
