@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jan 22 23:45:03 EST 2003 - nashif@suse.de
+
+- Fixed XML-RPC handling
+- 2.7.0
+
+-------------------------------------------------------------------
 Sat Sep  7 14:05:58 CEST 2002 - mvidner@suse.cz
 
 - Fixed a segfault when writing a class file (#18865).

@@ -912,13 +912,12 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     
     if (!strcmp(input,"string"))
     {
-	y2debug("Saving to a string");
 	xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
-	y2debug("Saving to a string");
+	
 	result = YCPString((const char *)mem);
-	y2debug("Saving to a string");
+	
 	xmlFree(mem);
-	y2debug("Saving to a string 4");
+	
     }
     else
     {
