@@ -33,7 +33,7 @@ XmlAgent::~XmlAgent()
 
 
 bool XmlAgent::isCDATA(YCPString section)
-{    
+{
     for (int i=0; i < Cdata->size(); i++) {
 	if (section->value() == Cdata->value(i)->asString()->value())
 	{
@@ -44,7 +44,7 @@ bool XmlAgent::isCDATA(YCPString section)
 }
 
 YCPValue XmlAgent::SetType(xmlNodePtr node) {
-    
+
     const xmlChar *confAttr;
     confAttr = xmlGetNsProp(node, (const xmlChar *) "type", (const xmlChar *) "http://www.suse.com/1.0/configns");
     xmlNodePtr lastChild = xmlGetLastChild (node);
@@ -66,9 +66,9 @@ YCPValue XmlAgent::SetType(xmlNodePtr node) {
     {
 	y2debug("Integer found");
 	return  (YCPInteger(atoi((const char *)lastChild->content)));
-    }   
-    
-    return  (YCPString((const char *)lastChild->content));    
+    }
+
+    return  (YCPString((const char *)lastChild->content));
 }
 
 
@@ -78,11 +78,11 @@ YCPValue XmlAgent::SetType(xmlNodePtr node) {
  * ParseNodesAsMap
  */
 YCPValue XmlAgent::ParseNodesAsMap(xmlNodePtr tree) {
-    YCPValue result = YCPVoid();    
+    YCPValue result = YCPVoid();
     YCPValue ret = YCPVoid();
     YCPMap resultMap;
     YCPList resultList;
-    
+
     xmlNodePtr nodes;
     nodes = tree->children;
     xmlKeepBlanksDefault(0);
@@ -90,11 +90,14 @@ YCPValue XmlAgent::ParseNodesAsMap(xmlNodePtr tree) {
     while (nodes != NULL) {
 
 	xmlNodePtr lastChild = xmlGetLastChild (nodes);
+    xmlChar *confAttr;
+    confAttr = xmlGetNsProp(nodes, (const xmlChar *) "type", (const xmlChar *) "http://www.suse.com/1.0/configns");
+
 	if (lastChild==NULL)
 	{
 	    y2debug("ignoring empty tag");
 	}
-	else if ( nodes!=NULL  &&  lastChild->type == XML_TEXT_NODE)
+	else if ( nodes!=NULL  &&  lastChild->type == XML_TEXT_NODE && xmlStrcmp(confAttr, (const xmlChar *)"list"))
 	{
 	    y2debug("Parsing text node: %s", (const char *)nodes->name);
 	    y2debug("Parsing text node (Child): %s:%s", (const char *)lastChild->name, (const char *)lastChild->content);
@@ -108,15 +111,12 @@ YCPValue XmlAgent::ParseNodesAsMap(xmlNodePtr tree) {
 	else
 	{
 
-	    xmlChar *confAttr;
-	    confAttr = xmlGetNsProp(nodes, (const xmlChar *) "type", (const xmlChar *) "http://www.suse.com/1.0/configns");
-	    
 	    if ( !xmlStrcmp(confAttr, (const xmlChar *)"list"))
 	    {
 		y2debug("Parsing List: %s",  (const char *)nodes->name);
-		ret = ParseNodesAsList(nodes);		
+		ret = ParseNodesAsList(nodes);
 		resultMap->add(YCPString((const char *)nodes->name), ret);
-	    }	 
+	    }
 	    else
 	    {
 		y2debug("Parsing Map: %s",  (const char *)nodes->name);
@@ -127,7 +127,7 @@ YCPValue XmlAgent::ParseNodesAsMap(xmlNodePtr tree) {
 	nodes = nodes->next;
     }
     return resultMap;
-	
+
 }
 
 
@@ -138,10 +138,10 @@ YCPValue XmlAgent::ParseNodesAsMap(xmlNodePtr tree) {
  */
 
 YCPValue XmlAgent::ParseNodesAsList(xmlNodePtr tree) {
-    
-    YCPValue ret = YCPVoid();    
+
+    YCPValue ret = YCPVoid();
     YCPList resultList;
-    
+
     xmlNodePtr nodes;
     nodes = tree->children;
     xmlKeepBlanksDefault(0);
@@ -149,25 +149,27 @@ YCPValue XmlAgent::ParseNodesAsList(xmlNodePtr tree) {
     while (nodes != NULL) {
 
 	xmlNodePtr lastChild = xmlGetLastChild (nodes);
+    const xmlChar *confAttr;
+    confAttr = xmlGetNsProp(nodes, (const xmlChar *) "type", (const xmlChar *) "http://www.suse.com/1.0/configns");
+
 	if (lastChild==NULL) {
 	    y2debug("empty tag");
 	}
-	else if (  nodes!=NULL  &&  lastChild->type == XML_TEXT_NODE  ) {
-	    resultList->add(SetType(nodes) );	    
+	else if (  nodes!=NULL  &&  lastChild->type == XML_TEXT_NODE && xmlStrcmp(confAttr, (const xmlChar *)"list") ) {
+	    y2debug("text Section");
+	    resultList->add(SetType(nodes) );
 	}
 	else if ( nodes!=NULL  &&  lastChild->type == XML_CDATA_SECTION_NODE) {
 	    y2debug("Cdata Section");
 	    resultList->add(YCPString((const char *)lastChild->content));
-	
-	} else 	{
-	    const xmlChar *confAttr;
-	    confAttr = xmlGetNsProp(nodes, (const xmlChar *) "type", (const xmlChar *) "http://www.suse.com/1.0/configns");	    
+
+	} else	{
 	    if ( !xmlStrcmp(confAttr, (const xmlChar *)"list"))
 	    {
 		y2debug("Parsing List: %s",  (const char *)nodes->name);
 		ret = ParseNodesAsList(nodes);
 		resultList->add(ret);
-	    }	 
+	    }
 	    else
 	    {
 		y2debug("Parsing Map: %s",  (const char *)nodes->name);
@@ -178,7 +180,7 @@ YCPValue XmlAgent::ParseNodesAsList(xmlNodePtr tree) {
 	nodes = nodes->next;
     }
     return resultList;
-	
+
 }
 
 YCPMap XmlAgent::getStruct(xmlNodePtr structNode)
@@ -188,21 +190,21 @@ YCPMap XmlAgent::getStruct(xmlNodePtr structNode)
     while (members != NULL) {
 	y2debug("Parsing struct member");
 	xmlNodePtr children = members->children;
-	YCPValue key = YCPVoid();	
+	YCPValue key = YCPVoid();
 	while (children!=NULL) {
 	    y2debug("Parsing struct member key/value");
 	    xmlNodePtr lastChild = xmlGetLastChild (children);
-	  
+
 	    if ( !xmlStrcmp(children->name,(const xmlChar *)"name")  ) {
 		y2debug("key: %s", (const char *)lastChild->content);
 		key = YCPString((const char *)lastChild->content);
-	    }	   
+	    }
 	    children = children->next;
 	}
 	result->add(key,getValue(members));
 	members = members->next;
     }
-    
+
     return result;
 }
 
@@ -210,7 +212,7 @@ YCPMap XmlAgent::getStruct(xmlNodePtr structNode)
 YCPValue XmlAgent::getArray(xmlNodePtr arrayNode)
 {
     YCPList result;
-    xmlNodePtr data = arrayNode->children;  
+    xmlNodePtr data = arrayNode->children;
     y2debug("List data: %s", (const char *)data->name);
     YCPValue ret = getValue(data);
     if (ret->isList()) {
@@ -231,16 +233,16 @@ YCPValue XmlAgent::getValue( xmlNodePtr paramNode)
 {
     YCPValue result = YCPVoid();
     YCPList arrayItems;
-    
+
     xmlNodePtr ValueNode;
     xmlNodePtr children = paramNode->children;
-   
+
     while (children!=NULL) {
-	
-	y2debug("Value: %s", (const char *)children->name );    
+
+	y2debug("Value: %s", (const char *)children->name );
 	if  ( !xmlStrcmp(children->name, (const xmlChar *)"value"))
 	{
-	  
+
 	    ValueNode = xmlGetLastChild (children);
 	    if ( !xmlStrcmp(ValueNode->name, (const xmlChar *)"int") ||
 		 !xmlStrcmp(ValueNode->name, (const xmlChar *)"i4"))
@@ -249,7 +251,7 @@ YCPValue XmlAgent::getValue( xmlNodePtr paramNode)
 		xmlNodePtr lastChild = xmlGetLastChild (ValueNode);
 		if (lastChild==NULL) {
 		    y2error("empty tag");
-		
+
 		}
 		else if ( lastChild->type == XML_TEXT_NODE  ) {
 		    result = YCPInteger(atoi((const char *)lastChild->content));
@@ -261,7 +263,7 @@ YCPValue XmlAgent::getValue( xmlNodePtr paramNode)
 		xmlNodePtr lastChild = xmlGetLastChild (ValueNode);
 		if (lastChild==NULL) {
 		    y2error("empty tag");
-	    
+
 		}
 		else if ( lastChild->type == XML_TEXT_NODE  ) {
 		    result = YCPString((const char *)lastChild->content);
@@ -273,26 +275,26 @@ YCPValue XmlAgent::getValue( xmlNodePtr paramNode)
 		xmlNodePtr lastChild = xmlGetLastChild (ValueNode);
 		if (lastChild==NULL) {
 		    y2error("empty tag");
-	    
+
 		}
 		else if ( lastChild->type == XML_TEXT_NODE  ) {
-		    if (!xmlStrcmp(lastChild->content, (const xmlChar *)"1")) 				   
+		    if (!xmlStrcmp(lastChild->content, (const xmlChar *)"1"))
 			result = YCPBoolean(true);
 		    else
 			result = YCPBoolean(false);
 		}
-	    }	    
+	    }
 	    else if ( !xmlStrcmp(ValueNode->name, (const xmlChar *)"struct"))
-	    {	
-		result = getStruct(ValueNode);	
+	    {
+		result = getStruct(ValueNode);
 	    }
 	    else if ( !xmlStrcmp(ValueNode->name, (const xmlChar *)"array"))
 	    {
 		y2debug("Got array ");
-		result = getArray(ValueNode);	
+		result = getArray(ValueNode);
 	    }
 	    arrayItems->add(result);
-	}	
+	}
 	children = children->next;
     }
     if (arrayItems->size() > 1) {
@@ -302,7 +304,7 @@ YCPValue XmlAgent::getValue( xmlNodePtr paramNode)
     {
 	return result;
     }
-	
+
 }
 
 
@@ -317,7 +319,7 @@ YCPList XmlAgent::getParams (xmlNodePtr paramsNode)
     xmlNodePtr childrenNode;
     childrenNode = paramsNode->children;
     while (childrenNode != NULL) {
-	y2debug("Parsing params");		    
+	y2debug("Parsing params");
 	if ( !xmlStrcmp(childrenNode->name, (const xmlChar *)"param") )
 	{
 	    params->add(getValue(childrenNode));
@@ -326,11 +328,11 @@ YCPList XmlAgent::getParams (xmlNodePtr paramsNode)
 	{
 	    y2error("<param> needed here");
 	}
-	
+
 	childrenNode = childrenNode->next;
     }
     return params;
-    
+
 }
 
 
@@ -338,14 +340,14 @@ YCPValue XmlAgent::Xmlrpc(xmlNodePtr tree)
 {
     YCPMap result;
     xmlNodePtr childrenNode;
-    
+
     childrenNode = tree->children;
     y2debug("Parsing xmlrpc....");
     while (childrenNode != NULL) {
 
 	y2debug("Parsing %s:%s", (const char *)childrenNode->name, xmlGetLastChild(childrenNode)->content);
 	if ( !xmlStrcmp(childrenNode->name, (const xmlChar *)"methodName") )
-	{	   
+	{
 	    result->add(YCPString("methodName"), YCPString((const char *)xmlGetLastChild(childrenNode)->content));
 	}
 	else if ( !xmlStrcmp(childrenNode->name, (const xmlChar *)"params") )
@@ -370,7 +372,7 @@ YCPValue XmlAgent::Xmlrpc(xmlNodePtr tree)
  */
 const char * getMapValue ( const YCPMap map, const string key)
 {
-    
+
     for (YCPMapIterator i = map->begin(); i != map->end (); i++)
     {
 	if (!i.key()->isString())   // key must be a string
@@ -386,7 +388,7 @@ const char * getMapValue ( const YCPMap map, const string key)
 		if (i.value()->isString()) {
 		    YCPString ret = i.value()->asString();
 		    return  (const char *)ret->value().c_str();
-		}			
+		}
 	    }
 	}
     }
@@ -408,13 +410,13 @@ YCPList getMapValueAsList ( const YCPMap map, const string key)
 	else        // everything OK
 	{
 	    string variablename = i.key()->asString()->value();
-	    if ( variablename == key )        
+	    if ( variablename == key )
 	    {
 		if (i.value()->isString() )
 		{
 		    y2error("Invalid value %s. Key %s requires one value",
 			    i.value()->toString().c_str(), key.c_str());
-		    break; 
+		    break;
 		}
 		YCPList value = i.value()->asList();
 		return ( value );
@@ -440,13 +442,13 @@ YCPMap getMapValueAsMap ( const YCPMap map, const string key)
 	else        // everything OK
 	{
 	    string variablename = i.key()->asString()->value();
-	    if ( variablename == key )        
+	    if ( variablename == key )
 	    {
 		if (i.value()->isString() )
 		{
 		    y2error("Invalid value %s. Key %s requires one value",
 			    i.value()->toString().c_str(), key.c_str());
-		    break; 
+		    break;
 		}
 		YCPMap value = i.value()->asMap();
 		return ( value );
@@ -469,11 +471,11 @@ xmlDocPtr ParseYCPMethodCall( YCPMap map, xmlDocPtr  doc)
 	if (!strcmp(key, "methodName"))
 	{
 	    y2debug("methodName");
-	    xmlNewChild(doc->children, NULL, (const xmlChar *)"methodName",(const xmlChar *)i.value()->asString()->value().c_str() );	   
+	    xmlNewChild(doc->children, NULL, (const xmlChar *)"methodName",(const xmlChar *)i.value()->asString()->value().c_str() );
 	}
 	else if (!strcmp(key,"params"))
 	{
-	    xmlNodePtr params = xmlNewChild(doc->children, NULL, (const xmlChar *)"params",NULL);	   
+	    xmlNodePtr params = xmlNewChild(doc->children, NULL, (const xmlChar *)"params",NULL);
 	    y2debug("params");
 	    if (i.value()->isList())
 	    {
@@ -489,22 +491,22 @@ xmlDocPtr ParseYCPMethodCall( YCPMap map, xmlDocPtr  doc)
 		    if (paramList->value(i)->isInteger())
 		    {
 			y2debug("integer found");
-			
+
 			xmlNodePtr val = xmlNewChild(param, NULL, (const xmlChar *)"value", NULL);
 			xmlNewChild(val, NULL, (const xmlChar *)"int", (const xmlChar *)paramList->value(i)->toString().c_str());
 		    }
 		    else if (paramList->value(i)->isString())
 		    {
 			y2debug("string found");
-			
+
 			xmlNodePtr val = xmlNewChild(param, NULL, (const xmlChar *)"value", NULL);
 			xmlNewChild(val, NULL, (const xmlChar *)"string", (const xmlChar *)paramList->value(i)->asString()->value().c_str());
 		    }
 		}
 	    }
 	}
-	
-	
+
+
     }
     return doc;
 }
@@ -516,10 +518,10 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
 {
     const char *entry = getMapValue( ListEntries, listname);
     if (!entry || !*entry) {
-	entry = "listentry";	
+	entry = "listentry";
     }
-    for (int i = 0;i<list->size();i++) 
-    {	
+    for (int i = 0;i<list->size();i++)
+    {
 	if (list->value(i)->isString())
 	{
 	    xmlNewChild(parent, NULL,
@@ -547,7 +549,7 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
 	    xmlNodePtr intNode = xmlNewChild(parent, NULL,
 					     (const xmlChar *)entry,
 					     (const xmlChar *)list->value(i)->toString().c_str());
-	    xmlNewNsProp(intNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"boolean");	    
+	    xmlNewNsProp(intNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"boolean");
 	}
 	else if (list->value(i)->isMap())
 	{
@@ -555,7 +557,7 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
 					     (const xmlChar *)entry,
 					     NULL);
 	    ParseYCPMap(list->value(i)->asMap(), mapNode, doc);
-	    
+
 	}
 	else if (list->value(i)->isList())
 	{
@@ -563,20 +565,20 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
 					      (const xmlChar *)entry,
 					      NULL);
 	    xmlNewNsProp(listNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"list");
-	    ParseYCPList(list->value(i)->asList(), listNode,  entry, doc);	    	    
-	}	
+	    ParseYCPList(list->value(i)->asList(), listNode,  entry, doc);
+	}
     }
-    
+
     return parent;
 }
 
 xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
     for (YCPMapIterator i = map->begin (); i != map->end (); i++)
-    {	
+    {
 	if (!i.key()->isString()) {
 	    y2error( "The value to be stored must be a string, skipping that entry");
 	    continue;
-	}	
+	}
 	if (i.value()->isString() &&  !isCDATA(i.key()->asString()))
 	{
 	    xmlNewChild(parent, NULL,
@@ -593,10 +595,10 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 						      (const xmlChar *)i.value()->asString()->value().c_str(),
 						      strlen(i.value()->asString()->value().c_str()));
 	    xmlAddChild(cdataNode,cdataBlock);
-	    
-	
-	    
-	}	
+
+
+
+	}
 	else if (i.value()->isInteger())
 	{
 	    xmlNodePtr intNode = xmlNewChild(parent, NULL,
@@ -617,7 +619,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	    xmlNodePtr intNode = xmlNewChild(parent, NULL,
 					     (const xmlChar *)i.key()->asString()->value().c_str(),
 					     (const xmlChar *)i.value()->toString().c_str());
-	    xmlNewNsProp(intNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"boolean");	    
+	    xmlNewNsProp(intNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"boolean");
 	}
 	else if (i.value()->isMap())
 	{
@@ -625,22 +627,22 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 					     (const xmlChar *)i.key()->asString()->value().c_str(),
 					     NULL);
 	    ParseYCPMap(i.value()->asMap(), mapNode, doc);
-	    
+
 	}
 	else if (i.value()->isList())
-	{	    
+	{
 	    xmlNodePtr listNode = xmlNewChild(parent, NULL,
 					      (const xmlChar *)i.key()->asString()->value().c_str(),
 					      NULL);
 	    xmlNewNsProp(listNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"list");
 	    ParseYCPList(i.value()->asList(), listNode, i.key()->asString()->value().c_str(), doc);
-	    
+
 	}
-	
+
     }
-   
+
     return parent;
-	
+
 }
 
 
@@ -677,47 +679,47 @@ xmlError(void *ctx, const char *msg, ...)
  */
 YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 {
-    
+
     string content;
     string input;
     const char *xmlData;
-    
+
     xmlDocPtr doc;
     xmlNodePtr tree;
     int ret, xi;
 
 
 
-    
+
     // Parse Path
     for (int i=0; i<path->length(); i++) {
 	if (path->component_str (i)=="xmlrpc") {
-	    content = path->component_str (i);	
+	    content = path->component_str (i);
 	}
 	else if (path->component_str (i) == "string") {
 	    input = path->component_str (i);
-	} 
+	}
     }
-		    
+
     // Get file name/string content from arguments
-    
+
     if ( !arg.isNull() && arg->isString())
         xmlData =  arg->asString()->value().c_str();
     else {
-        return YCPError (string ("File argument or data string missing"));        
+        return YCPError (string ("File argument or data string missing"));
     }
 
 
     xmlKeepBlanksDefault	(0);
     xmlDoValidityCheckingDefaultValue = 0;
-    xmlGetWarningsDefaultValue = 1;			
+    xmlGetWarningsDefaultValue = 1;
     xmlParserCtxtPtr ctxt;
     xmlSAXHandler silent, *old;
 
-    
+
     if (input == "string")
     {
-	y2debug("Parsing from memory");	
+	y2debug("Parsing from memory");
 	ctxt = xmlCreateMemoryParserCtxt(xmlData,strlen(xmlData));
     }
     else
@@ -726,25 +728,25 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 	ctxt = xmlCreateFileParserCtxt(xmlData);
 
     }
-		
+
     if (ctxt == NULL)
     {
-	doc = NULL;	    
+	doc = NULL;
     }
     else
     {
 
 	xmlSetGenericErrorFunc (ctxt, (xmlGenericErrorFunc) xmlError);
 
-	memcpy(&silent, ctxt->sax, sizeof(silent));	    
-	    
+	memcpy(&silent, ctxt->sax, sizeof(silent));
+
 	old = ctxt->sax;
 	silent.error = xmlError;
 	if (xmlGetWarningsDefaultValue)
 	    silent.warning = xmlError;
 	else
 	    silent.warning = NULL;
-	    
+
 	silent.fatalError = xmlError;
 	ctxt->sax = &silent;
 	ctxt->vctxt.error = xmlError;
@@ -758,7 +760,7 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 	ret = ctxt->wellFormed;
 	doc = ctxt->myDoc;
 
-	xi = xmlXIncludeProcess(doc);	    
+	xi = xmlXIncludeProcess(doc);
 	if (xi == -1)
 	    return YCPError(string ("Failed while processing XIncludes"));
 
@@ -776,13 +778,13 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 	}
     }
 
-    
+
     if (doc == NULL) {
 	y2error("Error opening the file");
 	xmlFreeDoc(doc);
 	return YCPVoid();
     }
-    
+
     tree = xmlDocGetRootElement(doc);
 
     if (tree == NULL) {
@@ -794,13 +796,13 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
     YCPValue result = YCPVoid();
     if (!strcmp(content.c_str(),"xmlrpc"))
     {
-	result = Xmlrpc(tree);	
+	result = Xmlrpc(tree);
     }
     else
     {
-	result = ParseNodesAsMap(tree);	
+	result = ParseNodesAsMap(tree);
     }
-	    
+
     xmlFreeDoc(doc);
     return result;;
 
@@ -816,44 +818,44 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
 YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPValue& arg )
 {
     const char *filename;
-    
-    YCPValue result = YCPVoid();        
+
+    YCPValue result = YCPVoid();
     int size;
     const char * input = "";
     const char *content = "";
-    
+
     xmlDocPtr doc, newDoc;
     xmlChar *mem;
 
 
-    
-    
-    
+
+
+
     for (int i=0; i<path->length(); i++)
     {
 	if (path->component_str (i)=="xmlrpc")
 	{
-	    content = (const char *)path->component_str (i).c_str();	
+	    content = (const char *)path->component_str (i).c_str();
 	}
 	else if (path->component_str (i) == "string") {
 	    input = (const char *)path->component_str (i).c_str();
-	} 
+	}
     }
 
     YCPMap argMap = arg->asMap();
     YCPMap options = value->asMap();
 
-    
+
     Cdata = getMapValueAsList ( options,"cdataSections" );
     ListEntries = getMapValueAsMap(options,"listEntries");
-        
-    const char *rootElement 	= getMapValue ( options,"rootElement");
-    const char *systemID 	= getMapValue ( options,"systemID" );    
-    const char *typeNS 		= getMapValue ( options,"typeNamespace" );
-    const char *fileName 	= getMapValue ( options,"fileName");
-    const char *nameSpace 	= getMapValue ( options,"nameSpace");
 
-    
+    const char *rootElement	= getMapValue ( options,"rootElement");
+    const char *systemID	= getMapValue ( options,"systemID" );
+    const char *typeNS		= getMapValue ( options,"typeNamespace" );
+    const char *fileName	= getMapValue ( options,"fileName");
+    const char *nameSpace	= getMapValue ( options,"nameSpace");
+
+
     // Get file name from arguments
     if (fileName && *fileName )
     {
@@ -869,13 +871,13 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
         return YCPVoid();
     }
 
-    
+
     doc = xmlNewDoc((const xmlChar *)"1.0");
 
     if (!strcmp(content,"xmlrpc"))
     {
 	y2milestone("XML-RPC handling");
-	doc->children = xmlNewDocNode(doc, NULL, (const xmlChar *)"methodCall", NULL);    
+	doc->children = xmlNewDocNode(doc, NULL, (const xmlChar *)"methodCall", NULL);
 	newDoc =  ParseYCPMethodCall(argMap, doc);
     }
     else
@@ -895,29 +897,29 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 	    configNamespace = NULL;
 	}
 
-	  
+
 	doc->children = ParseYCPMap(argMap, root, doc);
 	doc->intSubset = xmlCreateIntSubset (doc,
 					     (const xmlChar *)rootElement,
 					     NULL,
 					     (const xmlChar *)systemID);
 
-	
+
 	newDoc = xmlCopyDoc (doc,1);
-	
-	
+
+
     }
     xmlIndentTreeOutput  = 1;
     xmlKeepBlanksDefault	(0);
-    
+
     if (!strcmp(input,"string"))
     {
 	xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
-	
+
 	result = YCPString((const char *)mem);
-	
+
 	xmlFree(mem);
-	
+
     }
     else
     {
