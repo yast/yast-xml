@@ -26,5 +26,4 @@ Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 @plugindir@/libpy2ag_xml.so
 @plugindir@/libpy2ag_xml.la
 @scrconfdir@/xml.scr
-@moduledir@/*
 %doc @docdir@
