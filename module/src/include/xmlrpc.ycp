@@ -25,16 +25,15 @@
 			     list params)
 	``{
 	// first, translate to XML and save into string.
-	string methodCall = SCR::Write(.xml.string,"",
+	string methodCallXML = SCR::Write(.xml.xmlrpc.string, $[],
 				       $["methodName":methodName,
 					 "params":params]
 				       );
 	// Send request and save response into string
-	string methodResponseStr =
-	    SCR::Execute(.curl.xmlrpc, endpoint, $["data":methodCall]);
+	map methodResponseMap = SCR::Execute(.curl.xmlrpc, endpoint, $["data":methodCallXML]);
 
 	// Finally, convert XML response data into YCP
-	map methodResponse = SCR::Read(.xml.xmlrpc.string,methodResponseStr);
+	map methodResponse = SCR::Read(.xml.xmlrpc.string,methodResponseMap["output"]:"");
 
 	return methodResponse;
     }

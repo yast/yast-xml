@@ -825,14 +825,14 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     xmlDocPtr doc, newDoc;
     xmlChar *mem;
 
-    YCPMap argMap = arg->asMap();
-    YCPMap options = value->asMap();
 
     
     
     
-    for (int i=0; i<path->length(); i++) {
-	if (path->component_str (i)=="xmlrpc") {
+    for (int i=0; i<path->length(); i++)
+    {
+	if (path->component_str (i)=="xmlrpc")
+	{
 	    content = (const char *)path->component_str (i).c_str();	
 	}
 	else if (path->component_str (i) == "string") {
@@ -840,6 +840,8 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 	} 
     }
 
+    YCPMap argMap = arg->asMap();
+    YCPMap options = value->asMap();
 
     
     Cdata = getMapValueAsList ( options,"cdataSections" );
@@ -853,9 +855,13 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 
     
     // Get file name from arguments
-    if (fileName && *fileName)
+    if (fileName && *fileName )
     {
         filename =  fileName;
+    }
+    else if (input && *input)
+    {
+	y2milestone("String handling");
     }
     else
     {
@@ -867,7 +873,8 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     doc = xmlNewDoc((const xmlChar *)"1.0");
 
     if (!strcmp(content,"xmlrpc"))
-    {	
+    {
+	y2milestone("XML-RPC handling");
 	doc->children = xmlNewDocNode(doc, NULL, (const xmlChar *)"methodCall", NULL);    
 	newDoc =  ParseYCPMethodCall(argMap, doc);
     }
@@ -902,21 +909,27 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     }
     xmlIndentTreeOutput  = 1;
     xmlKeepBlanksDefault	(0);
+    
     if (!strcmp(input,"string"))
     {
 	y2debug("Saving to a string");
 	xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
+	y2debug("Saving to a string");
 	result = YCPString((const char *)mem);
+	y2debug("Saving to a string");
 	xmlFree(mem);
+	y2debug("Saving to a string 4");
     }
     else
     {
 	result = YCPBoolean( xmlSaveFormatFile(filename, newDoc, 1) != -1 );
     }
-    
+
     xmlFreeDoc(doc);
-    xmlFreeDoc(newDoc);
-    
+    if (strcmp(input,"string"))
+    {
+	xmlFreeDoc(newDoc);
+    }
     return result;
 
 }
