@@ -20,3 +20,4 @@ config.log
 aclocal.m4
 autom4te.cache
 mkinstalldirs
+Makefile.am.common
