@@ -13,8 +13,6 @@
 #ifndef _XmlAgent_h
 #define _XmlAgent_h
 
-#undef y2log_component
-#define y2log_component "ag_xml"
 #include <Y2.h>
 #include <scr/SCRAgent.h>
 #include <scr/SCRInterpreter.h>
