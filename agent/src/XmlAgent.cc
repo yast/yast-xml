@@ -515,7 +515,7 @@ xmlDocPtr ParseYCPMethodCall( YCPMap map, xmlDocPtr  doc)
 xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char * listname,  xmlDocPtr doc)
 {
     const char *entry = getMapValue( ListEntries, listname);
-    if (entry == "") {
+    if (!entry || !*entry) {
 	entry = "listentry";	
     }
     for (int i = 0;i<list->size();i++) 
@@ -853,7 +853,7 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 
     
     // Get file name from arguments
-    if ( fileName!="")
+    if (fileName && *fileName)
     {
         filename =  fileName;
     }
@@ -865,7 +865,7 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
 
     
     doc = xmlNewDoc((const xmlChar *)"1.0");
-   
+
     if (!strcmp(content,"xmlrpc"))
     {	
 	doc->children = xmlNewDocNode(doc, NULL, (const xmlChar *)"methodCall", NULL);    
@@ -874,14 +874,18 @@ YCPValue XmlAgent::Write(const YCPPath &path, const YCPValue& value, const YCPVa
     else
     {
 	xmlNodePtr root = xmlNewDocNode(doc, NULL, (const xmlChar *)rootElement, NULL);
-	
-	if ( nameSpace != "")
+	xmlDocSetRootElement (doc, root);
+
+	if (nameSpace && *nameSpace)
 	{
 	xmlNewNs (root,  (const xmlChar *)nameSpace, NULL);
 	}
 
-	if ( typeNS!="") {
+	if (typeNS && *typeNS) {
 	configNamespace = xmlNewNs (root,  (const xmlChar *)typeNS, (const xmlChar *)"config");
+	}
+	else {
+	    configNamespace = NULL;
 	}
 
 	  
