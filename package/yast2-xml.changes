@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Aug 19 16:15:44 CEST 2003 - nashif@suse.de
+
+- use String::CutBlanks
+- 2.8.2
+
+-------------------------------------------------------------------
 Wed Aug  6 16:24:07 CEST 2003 - nashif@suse.de
 
 - #28439: Dont parse empty xml elements defined as list into empty strings..
