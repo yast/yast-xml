@@ -28,7 +28,7 @@ Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 @scrconfdir@/xml.scr
 %dir @yncludedir@/xml
 @yncludedir@/xml/xmlrpc.ycp
-@moduledir@/XML.ycp
+@moduledir@/*
 %doc @docdir@
 @agentdir@/ag_xmltree
 @scrconfdir@/xmltree.scr
