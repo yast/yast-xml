@@ -44,5 +44,5 @@
 .xml
 
 `ag_xml(
-  XmlAgent()
+  `XmlAgent()
 )
