@@ -2,8 +2,8 @@
 # Makefile.am for xml/module/src/include
 #
 
-yincludedir = $(YAST2DIR)/include/xml
-yinclude_HEADERS = $(wildcard *.ycp)
+yncludedir = @yncludedir@/xml
+ynclude_HEADERS = $(wildcard *.ycp)
 
-EXTRA_DIST = $(yinclude_HEADERS)
+EXTRA_DIST = $(ynclude_HEADERS)
 
