@@ -650,7 +650,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 
 
 static void
-xmlError(void *ctx, const char *msg, ...)
+xmlagentError(void *ctx, const char *msg, ...)
 {
     char *result;
     va_list args;
@@ -736,22 +736,22 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg )
     else
     {
 
-	xmlSetGenericErrorFunc (ctxt, (xmlGenericErrorFunc) xmlError);
+	xmlSetGenericErrorFunc (ctxt, (xmlGenericErrorFunc) xmlagentError);
 
 	memcpy(&silent, ctxt->sax, sizeof(silent));
 
 	old = ctxt->sax;
-	silent.error = xmlError;
+	silent.error = xmlagentError;
 	if (xmlGetWarningsDefaultValue)
-	    silent.warning = xmlError;
+	    silent.warning = xmlagentError;
 	else
 	    silent.warning = NULL;
 
-	silent.fatalError = xmlError;
+	silent.fatalError = xmlagentError;
 	ctxt->sax = &silent;
-	ctxt->vctxt.error = xmlError;
+	ctxt->vctxt.error = xmlagentError;
 	if (xmlGetWarningsDefaultValue)
-	    ctxt->vctxt.warning = xmlError;
+	    ctxt->vctxt.warning = xmlagentError;
 	else
 	    ctxt->vctxt.warning = NULL;
 
