@@ -95,8 +95,11 @@
 
 	map docSettings = docs[docType]:$[];
 	docSettings["fileName"] = "dummy";
-	string ret = (string) SCR::Execute(.xml.string, docSettings, contents);
-	return ret;
+	any ret = SCR::Execute(.xml.string, docSettings, contents);
+        if (is(ret, string))
+	    return (string)ret;
+        else
+            return "";
     }
 
     /**

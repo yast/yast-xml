@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Mar  4 19:02:02 CET 2004 - nashif@suse.de
+
+- dont try to evaluate unknown data types (#35166)
+- 2.9.4
+
+-------------------------------------------------------------------
 Tue Mar  2 05:06:55 CET 2004 - nashif@suse.de
 
 - Added type info
