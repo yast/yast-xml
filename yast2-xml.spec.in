@@ -1,6 +1,5 @@
 @HEADER-COMMENT@
-
-# neededforbuild  autoconf automake gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-core yast2-core-devel yast2-devtools
+# neededforbuild gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-core yast2-core-devel yast2-devtools
 
 @HEADER@
 Summary:	-
@@ -10,12 +9,6 @@ Provides:	yast2-agent-xml yast2-lib-xml
 Obsoletes:	yast2-agent-xml yast2-lib-xml
 
 %description
--
-
-@HEADER-DEVEL@
-Summary:	-
-
-%description devel
 -
 
 @PREP@
@@ -28,18 +21,11 @@ Summary:	-
 
 %files
 %defattr(-,root,root)
-%dir @plugindir@
 @plugindir@/libpy2ag_xml.so.*
-%dir @scrconfdir@
+@plugindir@/libpy2ag_xml.so
+@plugindir@/libpy2ag_xml.la
 @scrconfdir@/*.scr
 %dir @yncludedir@/xml
 @yncludedir@/xml/*
 @moduledir@/XML.ycp
-
-%files devel
-%defattr(-,root,root)
-%dir @plugindir@
-@plugindir@/libpy2ag_xml.so
-@plugindir@/libpy2ag_xml.la
-%docdir @docdir@
-%doc @docdir@/*
+%doc @docdir@
