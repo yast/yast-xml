@@ -5,8 +5,9 @@
 @HEADER@
 Summary:	-
 Requires:	libxml2
-Provides:	yast2-agent-xml
-Obsoletes:	yast2-agent-xml
+Requires:	yast2 yast2-curl
+Provides:	yast2-agent-xml yast2-lib-xml
+Obsoletes:	yast2-agent-xml yast2-lib-xml
 
 %description
 -
