@@ -567,24 +567,31 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
 	    xmlNewNsProp(listNode, configNamespace, (const xmlChar *)"type", (const xmlChar *)"list");
 	    ParseYCPList(list->value(i)->asList(), listNode,  entry, doc);
 	}
+        else
+        {
+            break;
+        }
     }
 
     return parent;
 }
 
 xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
+
     for (YCPMapIterator i = map->begin (); i != map->end (); i++)
     {
 	if (!i.key()->isString()) {
 	    y2error( "The value to be stored must be a string, skipping that entry");
 	    continue;
 	}
-	if (i.value()->isString() &&  !isCDATA(i.key()->asString()))
+	if ( i.value()->isString() &&  !isCDATA(i.key()->asString()))
 	{
+            y2debug("not cdata");
 	    xmlNewChild(parent, NULL,
 			(const xmlChar *)(const xmlChar *)i.key()->asString()->value().c_str(),
 			(const xmlChar *)i.value()->asString()->value().c_str());
 	}
+
 	if (i.value()->isString() &&  isCDATA(i.key()->asString()))
 	{
 	    y2debug("cdata section");
@@ -601,6 +608,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	}
 	else if (i.value()->isInteger())
 	{
+            y2debug("integer");
 	    xmlNodePtr intNode = xmlNewChild(parent, NULL,
 					     (const xmlChar *)i.key()->asString()->value().c_str(),
 					     (const xmlChar *)i.value()->toString().c_str());
@@ -608,6 +616,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	}
 	else if (i.value()->isSymbol())
 	{
+            y2debug("symbol");
 	    int length = i.value()->toString().length();
 	    xmlNodePtr intNode = xmlNewChild(parent, NULL,
 					     (const xmlChar *)i.key()->asString()->value().c_str(),
@@ -616,6 +625,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	}
 	else if (i.value()->isBoolean())
 	{
+            y2debug("boolean");
 	    xmlNodePtr intNode = xmlNewChild(parent, NULL,
 					     (const xmlChar *)i.key()->asString()->value().c_str(),
 					     (const xmlChar *)i.value()->toString().c_str());
@@ -623,6 +633,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	}
 	else if (i.value()->isMap())
 	{
+            y2debug("map");
 	    xmlNodePtr mapNode = xmlNewChild(parent, NULL,
 					     (const xmlChar *)i.key()->asString()->value().c_str(),
 					     NULL);
@@ -631,6 +642,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	}
 	else if (i.value()->isList())
 	{
+            y2debug("list");
 	    xmlNodePtr listNode = xmlNewChild(parent, NULL,
 					      (const xmlChar *)i.key()->asString()->value().c_str(),
 					      NULL);
@@ -638,6 +650,10 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	    ParseYCPList(i.value()->asList(), listNode, i.key()->asString()->value().c_str(), doc);
 
 	}
+        else
+        {
+            break;
+        }
 
     }
 
