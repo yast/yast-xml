@@ -31,6 +31,9 @@ Summary:	-
 @plugindir@/libpy2ag_xml.so.*
 %dir @scrconfdir@
 @scrconfdir@/*.scr
+%dir @yncludedir@/xml
+@yncludedir@/xml/*
+@moduledir@/XML.ycp
 
 %files devel
 %defattr(-,root,root)

@@ -1,0 +1,44 @@
+/**
+ * Module:		xmlrpc.ycp
+ *
+ * Authors:		Anas Nashif (nashif@suse.de)
+ *
+ * Purpose:		XML-RPC client interface
+ *
+ * $Id$
+ */
+
+{
+    /**
+     * Send a XML-RPC request to a given server 
+     * @param endpoint Server address as a HTTP URL
+     * @param methodName method to call on server
+     * @param params A list of parameters for the method
+     * @example methodCall("http://www.advogato.org/XMLRPC", "test.capitalize", ["yast2"])
+     *
+     * @return A map with the methodResponse or a fault response with fault code and faultString.
+     */
+    
+    global define map methodCall(
+			     string endpoint,
+			     string methodName,
+			     list params)
+	``{
+	// first, translate to XML and save into string.
+	string methodCall = SCR::Write(.xml.string,"",
+				       $["methodName":methodName,
+					 "params":params]
+				       );
+	// Send request and save response into string
+	string methodResponseStr =
+	    SCR::Execute(.curl.xmlrpc, endpoint, $["data":methodCall]);
+
+	// Finally, convert XML response data into YCP
+	map methodResponse = SCR::Read(.xml.xmlrpc.string,methodResponseStr);
+
+	return methodResponse;
+    }
+
+    
+    
+}

@@ -1,0 +1,117 @@
+/**
+ * Module:		XML.ycp
+ *
+ * Authors:		Anas Nashif (nashif@suse.de)
+ *
+ * Purpose:		XML
+ *
+ * $Id$
+ */
+
+{
+    module "XML";
+
+    // Sections in XML file that should be treated as CDATA when saving
+    global list cdataSections = [];
+
+    // How to call a list entry in the XML output    
+    global map listEntries = $[];
+
+    // The system ID, or the DTD URI
+    global string systemID = "";
+
+    // root element of the XML file
+    global string rootElement = "";
+
+    // Global Namespace xmlns=...
+    global string nameSpace = "http://www.suse.com/1.0/yast2ns";
+
+    // Type name space xmlns:config for YCP data (http://www.suse.com/1.0/configns)
+    global string typeNamespace = "http://www.suse.com/1.0/configns";
+
+    global map docs = $[];
+
+
+
+    /**
+     * Constructor
+     */
+    define void XML() ``{
+	return;
+    }
+    
+
+    /**
+     * define a new doc type with custom settings, if not defined, global settings will
+     * be used.
+     * @return void 
+     */
+    
+    global define void xmlCreateDoc(symbol doc, map docSettings)
+	``{
+	map current_settings = $[
+				 "cdataSections":docSettings["cdataSections"]:cdataSections,
+				 "systemID":docSettings["systemID"]:systemID,
+				 "rootElement":docSettings["rootElement"]:rootElement,
+				 "listEntries": docSettings["listEntries"]:listEntries,			
+				 "nameSpace":docSettings["nameSpace"]:nameSpace,
+				 "typeNamespace":docSettings["typeNamespace"]:typeNamespace
+	];
+	docs[doc] = current_settings;
+	return;
+    }
+
+    
+ 
+    
+    /** Write YCP data into formated XML file
+     * @param contents  a map with YCP data
+     * @param outputPath the path of the XML file
+     * @return boolean true on sucess
+     */
+    global define boolean YCPToXMLFile(symbol docType, map contents, string outputPath) ``{	
+	if (!haskey(docs, docType))
+	    return false;
+	
+	map docSettings = docs[docType]:$[];
+	docSettings["fileName"] = outputPath;
+	y2debug("Write(.xml, %1, %2)", docSettings, contents);
+	boolean ret = SCR::Write(.xml,
+				 docSettings,
+				 contents);
+	return ret;
+    }
+    
+    /** Write YCP data into formated XML string
+     * @param contents  a map with YCP data     
+     * @return string String with XML data
+     */
+    global define string YCPToXMLString(symbol docType, map contents) ``{
+	if (!haskey(docs, docType))
+	    return false;
+	
+	map docSettings = docs[docType]:$[];
+	docSettings["fileName"] = "dummy";
+	string ret = SCR::Write(.xml.string,
+				docSettings,
+				 contents);
+	return ret;
+    }
+
+    /**
+     * Read XML file into YCP
+     * @param xmlFile XML file name to read
+     * @return map Map with YCP data
+     */
+    
+    global define map XMLToYCPFile( string xmlFile) ``{
+	y2milestone("Trying to read %1", xmlFile);
+	if (SCR::Read(.target.size, xmlFile)>0) {
+	    return SCR::Read(.xml, xmlFile);
+	} else {
+	    return ($[]);
+	
+	}
+    }
+        
+}

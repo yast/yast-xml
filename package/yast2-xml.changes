@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
 Mon Jun 24 16:02:34 CEST 2002 - arvin@suse.de
 
-- renamed to yast2-xml
+- renamed to from yast2-agent-xml to yast2-xml and
+  merged with yast2-lib-xml
 
 -------------------------------------------------------------------
 Sat May 18 15:24:06 EDT 2002 - nashif@suse.de

@@ -1,0 +1,13 @@
+/**
+ * Module:		HTTP.ycp
+ *
+ * Authors:		Anas Nashif (nashif@suse.de)
+ *
+ * Purpose:		HTTP
+ *
+ * $Id$
+ */
+
+{
+    module "HTTP";
+}
