@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sat Sep  7 14:05:58 CEST 2002 - mvidner@suse.cz
+
+- Fixed a segfault when writing a class file (#18865).
+- Return an error if saving fails.
+- 2.6.8
+
+-------------------------------------------------------------------
 Wed Aug 14 06:34:15 CEST 2002 - nashif@suse.de
 
 - added xmlrpc to filelist
