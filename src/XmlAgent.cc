@@ -700,6 +700,8 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPValue
     xmlNodePtr tree;
     int ret, xi;
 
+    ParseError = 0; // reset previous error state
+
     // Parse Path
     for (int i=0; i<path->length(); i++) {
 	if (path->component_str (i)=="xmlrpc") {
