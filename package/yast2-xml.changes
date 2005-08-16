@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Aug 16 14:03:21 CEST 2005 - ug@suse.de
+
+- reset previous error state
+- 2.12.0
+
+-------------------------------------------------------------------
 Wed Feb  9 06:52:39 CET 2005 - nashif@suse.de
 
 - Moved YCP module to yast2 package
