@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jan 11 16:15:20 CET 2006 - mvidner@suse.cz
+
+- Added Read (.xml.error_message) (ug).
+- 2.13.0
+
+-------------------------------------------------------------------
 Tue Aug 16 14:03:21 CEST 2005 - ug@suse.de
 
 - reset previous error state

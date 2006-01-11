@@ -41,8 +41,13 @@ and also for the list of possible future enhancements.
 <P>
 <H2>Read options</H2>
 To read an XML file into ycp, the following syntax is required:
-<br>
+
+<p>
 Read(.xml,"&lt;file_name&gt;");
+<p>
+Read(.xml.error_message); contains the error string from the xml parser.
+It should be used when the agent did not return content.
+A reset happens before a new XML parsing starts.
 
 <H2>Write options</H2>
 To write an XML file into ycp, the following syntax is required:

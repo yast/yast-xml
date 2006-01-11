@@ -12,8 +12,10 @@
 
 #include "XmlAgent.h"
 #include <stdarg.h>
+#include <string>
 
 int ParseError = 0;
+std::string ErrorMessage("");
 
 /**
  * Constructor
@@ -676,6 +678,7 @@ xmlagentError(void *ctx, const char *msg, ...)
     if (result) {
 	// xmlGenericError(xmlGenericErrorContext, "%s", result);
 	y2error(result);
+	ErrorMessage += std::string(result);
 	xmlFree(result);
     }
     buffer[0] = 0;
@@ -710,7 +713,12 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPValue
 	else if (path->component_str (i) == "string") {
 	    input = path->component_str (i);
 	}
+        else if (path->component_str (i) == "error_message") {
+            return YCPString(ErrorMessage);
+        }
     }
+
+    ErrorMessage = std::string();
 
     // Get file name/string content from arguments
 
