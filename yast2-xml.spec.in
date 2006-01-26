@@ -1,8 +1,8 @@
 @HEADER-COMMENT@
 
-# neededforbuild  gpp libgpp libxcrypt-devel libxml2 libxml2-devel yast2-devel-packages
 
 @HEADER@
+BuildRequires:	gcc-c++ libxcrypt-devel yast2-devel-packages
 Summary:	-
 Requires:	libxml2
 Requires:	yast2
