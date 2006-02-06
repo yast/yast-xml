@@ -2,7 +2,7 @@
 
 
 @HEADER@
-BuildRequires:	gcc-c++ libxcrypt-devel yast2-devel-packages
+BuildRequires:	gcc-c++ libxcrypt-devel yast2-devtools doxygen yast2-core-devel
 Summary:	-
 Requires:	libxml2
 Requires:	yast2
