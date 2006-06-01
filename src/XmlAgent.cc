@@ -755,6 +755,7 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPValue
     else
     {
 
+	y2milestone( "Setting XML generic error handler" );
 	xmlSetGenericErrorFunc (ctxt, (xmlGenericErrorFunc) xmlagentError);
 
 	memcpy(&silent, ctxt->sax, sizeof(silent));
@@ -781,10 +782,19 @@ YCPValue XmlAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPValue
 
 	xi = xmlXIncludeProcess(doc);
 	if (xi == -1)
+	{
+	    y2milestone( "Freeing generic XML error handler");
+	    xmlSetGenericErrorFunc( NULL, NULL );
 	    return YCPError(string ("Failed while processing XIncludes"));
+	}
 
 	ctxt->sax = old;
+
+	y2milestone( "Freeing generic XML error handler");
+	xmlSetGenericErrorFunc( NULL, NULL );
+
 	xmlFreeParserCtxt(ctxt);
+
 	if (!ret)
 	{
 	    xmlFreeDoc(doc);

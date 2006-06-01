@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Jun  1 15:05:23 CEST 2006 - visnov@suse.cz
+
+- De-register error handler when not parsing anymore (#175197)
+- 2.13.2 
+
+-------------------------------------------------------------------
 Mon Feb  6 09:40:46 CET 2006 - jsuchome@suse.cz
 
 - reduced BuildRequires
