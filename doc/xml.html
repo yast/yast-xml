@@ -8,17 +8,16 @@
 <HR>
 
 <H2>Purpose</H2> 
-The XML agent (<TT>ag_XML</TT>) is used to access to create XML documents from
+The XML agent (<TT>ag_xml</TT>) is used to access to create XML documents from
 YCP data structures and also read XML files into YCP.
 It is part of YaST2 SCR, the system configuration repository,
 used to access configuration data on the target system. The general
-SCR API allows <TT>Read()</TT> and <TT>Write()</TT> access to get and
+SCR API allows <TT>Read()</TT> and <TT>Execute()</TT> access to get and
 change data.
 
 <P>
 <H2>Implementation</H2>
-The agent is implemented using the XML extensions of the Qt library. Parsing and
-creating the documents is done using the DOM classes of the Qt library.
+The agent is implemented using the libxml2 library.
 <P>
 <I><B>Note:</B> The complete development documentation is available in the
 <A HREF="autodocs/index.html"><TT>autodocs/</TT></A> directory.</I>
@@ -26,7 +25,7 @@ creating the documents is done using the DOM classes of the Qt library.
 <P>
 <H2>Interface for XML-agent</H2>
 The interface is implemented as a SCR agent with the usual <TT>Read()</TT>
-and <TT>Write()</TT> interfaces. The path prefix used is
+and <TT>Execute()</TT> interfaces (no Write). The path prefix used is
 
 <UL><TT>.xml</TT></UL>
 
@@ -43,16 +42,20 @@ and also for the list of possible future enhancements.
 To read an XML file into ycp, the following syntax is required:
 
 <p>
-Read(.xml,"&lt;file_name&gt;");
+string Read(.xml,"<I>file_name</I>");
 <p>
-Read(.xml.error_message); contains the error string from the xml parser.
+string Read(.xml.string,"&lt;?xml version='1.0'?&gt...");
+<p>
+string Read(.xml.error_message); contains the error string from the xml parser.
 It should be used when the agent did not return content.
 A reset happens before a new XML parsing starts.
 
-<H2>Write options</H2>
-To write an XML file into ycp, the following syntax is required:
-<br>
-Write(.xml,$[&lt;options map&gt;], $[ycp data]);
+<H2>Execute options</H2>
+To write an XML file from ycp, the following syntax is required:
+<p>
+Execute(.xml,$[&lt;options map&gt;], $[ycp data]);
+<p>
+string Execute(.xml.string,$[&lt;options map&gt;], $[ycp data]);
 <p>
 The options map contains the following data:
 <ul>

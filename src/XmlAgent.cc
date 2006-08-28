@@ -497,7 +497,7 @@ xmlDocPtr ParseYCPMethodCall( YCPMap map, xmlDocPtr  doc)
 			y2debug("string found");
 
 			xmlNodePtr val = xmlNewChild(param, NULL, (const xmlChar *)"value", NULL);
-			xmlNewChild(val, NULL, (const xmlChar *)"string", (const xmlChar *)paramList->value(i)->asString()->value().c_str());
+			xmlNewTextChild(val, NULL, (const xmlChar *)"string", (const xmlChar *)paramList->value(i)->asString()->value().c_str());
 		    }
 		}
 	    }
@@ -521,7 +521,8 @@ xmlNodePtr XmlAgent::ParseYCPList(YCPList list, xmlNodePtr parent, const  char *
     {
 	if (list->value(i)->isString())
 	{
-	    xmlNewChild(parent, NULL,
+	    // do not interpret entities, #187618
+	    xmlNewTextChild(parent, NULL,
 			(const xmlChar *)entry,
 			(const xmlChar *)list->value(i)->asString()->value().c_str());
 	}
@@ -585,7 +586,7 @@ xmlNodePtr XmlAgent::ParseYCPMap(YCPMap map, xmlNodePtr parent, xmlDocPtr doc) {
 	if ( i.value()->isString() &&  !isCDATA(i.key()->asString()))
 	{
             y2debug("not cdata");
-	    xmlNewChild(parent, NULL,
+	    xmlNewTextChild(parent, NULL,
 			(const xmlChar *)(const xmlChar *)i.key()->asString()->value().c_str(),
 			(const xmlChar *)i.value()->asString()->value().c_str());
             continue;

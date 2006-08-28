@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Aug 28 17:42:17 CEST 2006 - mvidner@suse.cz
+
+- Do not try to interpret entities in YCP strings (#187618).
+  Fixes autoyast profiles that are supposed to contain "&", like
+  "iso:" add-on URLs.
+- 2.13.3
+
+-------------------------------------------------------------------
 Thu Jun  1 15:05:23 CEST 2006 - visnov@suse.cz
 
 - De-register error handler when not parsing anymore (#175197)
