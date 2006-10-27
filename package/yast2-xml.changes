@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Fri Oct 27 12:48:05 CEST 2006 - mvidner@suse.cz
+
+- Removed dependencies that were present only because of YCP code
+  (that had been moved to yast2.rpm long ago).
+- Removed an explicit dependency on libxcrypt-devel, only
+  yast2-core-devel needs it.
+- 2.14.0
+
+-------------------------------------------------------------------
 Thu Jun  1 15:05:23 CEST 2006 - visnov@suse.cz
 
 - De-register error handler when not parsing anymore (#175197)
