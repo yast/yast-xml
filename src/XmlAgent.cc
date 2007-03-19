@@ -936,7 +936,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
 	doc->intSubset = xmlCreateIntSubset (doc,
 					     (const xmlChar *)rootElement,
 					     NULL,
-					     (const xmlChar *)systemID);
+					     (const xmlChar *)( strlen(systemID)>0 ? systemID : NULL ));
 	newDoc = xmlCopyDoc (doc,1);
     }
     xmlIndentTreeOutput  = 1;
