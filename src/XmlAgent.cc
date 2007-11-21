@@ -677,7 +677,7 @@ xmlagentError(void *ctx, const char *msg, ...)
     result = (char *) xmlEncodeEntitiesReentrant(NULL, BAD_CAST buffer);
     if (result) {
 	// xmlGenericError(xmlGenericErrorContext, "%s", result);
-	y2error(result);
+	y2error("%s", result);
 	ErrorMessage += std::string(result);
 	xmlFree(result);
     }
