@@ -16,6 +16,7 @@ Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 @BUILD@
 
 @INSTALL@
+rm -f $RPM_BUILD_ROOT/@plugindir@/libpy2ag_xml.la
 
 @CLEAN@
 
@@ -23,6 +24,5 @@ Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 %defattr(-,root,root)
 @plugindir@/libpy2ag_xml.so.*
 @plugindir@/libpy2ag_xml.so
-@plugindir@/libpy2ag_xml.la
 @scrconfdir@/xml.scr
 %doc @docdir@

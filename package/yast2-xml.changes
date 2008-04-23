@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Apr 23 16:10:32 CEST 2008 - mvidner@suse.cz
+
+- Removed superfluous .la file (#223714).
+
+-------------------------------------------------------------------
 Wed Nov 21 10:54:07 CET 2007 - mvidner@suse.cz
 
 - BuildRequirement of libxml2-devel made explicit.
