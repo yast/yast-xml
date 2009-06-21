@@ -9,7 +9,7 @@ Provides:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 
 %description
--
+The YaST2 XML agent
 
 @PREP@
 
