@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Nov 25 12:26:42 UTC 2011 - coolo@suse.com
+
+- add libtool as buildrequire to avoid implicit dependency
+
+-------------------------------------------------------------------
 Wed Apr 23 16:17:24 CEST 2008 - mvidner@suse.cz
 
 - Removed superfluous .la file (bnc#223714).
