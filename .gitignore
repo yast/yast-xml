@@ -2,7 +2,7 @@ Makefile
 Makefile.in
 Makefile.am
 configure
-configure.in
+configure.ac
 config.h
 config.h.in
 config.cache
@@ -21,3 +21,5 @@ aclocal.m4
 autom4te.cache
 mkinstalldirs
 Makefile.am.common
+*.m4
+*.ami
