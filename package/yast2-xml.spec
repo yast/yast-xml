@@ -26,7 +26,7 @@ Source0:        %{name}-%{version}.tar.bz2
 Group:	        System/YaST
 License:        GPL-2.0+
 BuildRequires:	gcc-c++ libtool doxygen yast2-core-devel libxml2-devel
-BuildRequires:  yast2-devtools >= 3.0.6
+BuildRequires:  yast2-devtools >= 3.1.10
 Summary:	YaST2 - XML Agent
 Requires:	yast2-core
 Provides:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
