@@ -1,5 +1,5 @@
-FROM yastdevel/cpp-tw
+FROM yastdevel/cpp
 RUN zypper --gpg-auto-import-keys --non-interactive in --no-recommends \
   libxml2-devel
-COPY . /tmp/sources
+COPY . /usr/src/app
 
