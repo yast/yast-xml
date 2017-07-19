@@ -30,7 +30,8 @@ XmlAgent::XmlAgent() : SCRAgent()
  */
 XmlAgent::~XmlAgent()
 {
-    xmlCleanupParser ();
+    // bsc#1047449, this crashes if ruby uses nokogiri (which also uses libxml2)
+    // xmlCleanupParser ();
 }
 
 
