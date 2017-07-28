@@ -1,7 +1,7 @@
 #
 # spec file for package yast2-xml
 #
-# Copyright (c) 2017 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -17,28 +17,20 @@
 
 
 Name:           yast2-xml
-Version:        3.1.2
+Version:        3.1.1
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        %{name}-%{version}.tar.bz2
 
-BuildRequires:  doxygen
-BuildRequires:  gcc-c++
-BuildRequires:  libtool
-BuildRequires:  libxml2-devel
-BuildRequires:  yast2-core-devel
-BuildRequires:  yast2-devtools >= 3.1.10
-Summary:        YaST2 - XML Agent
+Group:	        System/YaST
 License:        GPL-2.0+
-Group:          System/YaST
-Requires:       yast2-core
-Provides:       yast2-agent-xml
-Provides:       yast2-agent-xml-devel
-Provides:       yast2-lib-xml
-Obsoletes:      yast2-agent-xml
-Obsoletes:      yast2-agent-xml-devel
-Obsoletes:      yast2-lib-xml
+BuildRequires:	gcc-c++ libtool doxygen yast2-core-devel libxml2-devel
+BuildRequires:  yast2-devtools >= 3.1.10
+Summary:	YaST2 - XML Agent
+Requires:	yast2-core
+Provides:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
+Obsoletes:	yast2-agent-xml yast2-agent-xml-devel yast2-lib-xml
 
 %description
 The YaST2 XML agent
@@ -54,11 +46,10 @@ The YaST2 XML agent
 
 rm -f $RPM_BUILD_ROOT/%{yast_plugindir}/libpy2ag_xml.la
 
+
 %files
 %defattr(-,root,root)
 %{yast_plugindir}/libpy2ag_xml.so.*
 %{yast_plugindir}/libpy2ag_xml.so
 %{yast_scrconfdir}/xml.scr
 %doc %{yast_docdir}
-
-%changelog
