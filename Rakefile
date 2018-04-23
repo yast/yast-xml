@@ -1,5 +1,7 @@
 require "yast/rake"
 
+Yast::Tasks.submit_to :sle12sp4
+
 Yast::Tasks.configuration do |conf|
   conf.obs_api = "https://api.suse.de/"
   conf.obs_target = "SLE_12"
