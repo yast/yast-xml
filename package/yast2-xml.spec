@@ -30,7 +30,7 @@ BuildRequires:  libxml2-devel
 BuildRequires:  yast2-core-devel
 BuildRequires:  yast2-devtools >= 3.1.10
 Summary:        YaST2 - XML Agent
-License:        GPL-2.0+
+License:        GPL-2.0-or-later
 Group:          System/YaST
 Requires:       yast2-core
 Provides:       yast2-agent-xml
