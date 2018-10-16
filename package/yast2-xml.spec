@@ -60,5 +60,6 @@ rm -f $RPM_BUILD_ROOT/%{yast_plugindir}/libpy2ag_xml.la
 %{yast_plugindir}/libpy2ag_xml.so
 %{yast_scrconfdir}/xml.scr
 %doc %{yast_docdir}
+%license COPYING
 
 %changelog
