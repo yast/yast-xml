@@ -932,7 +932,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     xmlIndentTreeOutput  = 1;
     xmlKeepBlanksDefault	(0);
 
-    if (!strcmp(input,"string"))
+    if (strcmp(input,"string"))
     {
 	xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
 
