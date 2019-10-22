@@ -850,7 +850,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
 
     YCPValue result = YCPVoid();
     int size;
-    std::string input;
+    std::string pth;
 
     xmlDocPtr doc, newDoc;
     xmlChar *mem;
@@ -858,7 +858,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     for (int i=0; i<path->length(); i++)
     {
         if (path->component_str (i) == "string")
-            input = path->component_str (i);
+            pth = path->component_str (i);
     }
 
     YCPMap argMap = arg->asMap();
@@ -867,6 +867,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     Cdata = getMapValueAsList ( options,"cdataSections" );
     ListEntries = getMapValueAsMap(options,"listEntries");
 
+    const bool string_output = (pth == "string");
     const char *rootElement	= getMapValue ( options,"rootElement");
     const char *systemID	= getMapValue ( options,"systemID" );
     const char *typeNS		= getMapValue ( options,"typeNamespace" );
@@ -879,7 +880,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     {
         filename =  fileName;
     }
-    else if (input == "string")
+    else if (string_output)
     {
         y2milestone("String handling");
     }
@@ -919,7 +920,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     xmlIndentTreeOutput  = 1;
     xmlKeepBlanksDefault (0);
 
-    if (input == "string")
+    if (string_output)
     {
         xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
 
