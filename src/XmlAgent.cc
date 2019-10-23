@@ -850,21 +850,15 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
 
     YCPValue result = YCPVoid();
     int size;
-    const char * input = "";
-    const char *content = "";
+    bool string_output = false;
 
     xmlDocPtr doc, newDoc;
     xmlChar *mem;
 
     for (int i=0; i<path->length(); i++)
     {
-	if (path->component_str (i)=="xmlrpc")
-	{
-	    content = (const char *)path->component_str (i).c_str();
-	}
-	else if (path->component_str (i) == "string") {
-	    input = (const char *)path->component_str (i).c_str();
-	}
+        if (path->component_str (i) == "string")
+            string_output = true;
     }
 
     YCPMap argMap = arg->asMap();
@@ -885,9 +879,9 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     {
         filename =  fileName;
     }
-    else if (input && *input)
+    else if (string_output)
     {
-	y2milestone("String handling");
+        y2milestone("String handling");
     }
     else
     {
@@ -898,56 +892,47 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
 
     doc = xmlNewDoc((const xmlChar *)"1.0");
 
-    if (!strcmp(content,"xmlrpc"))
+    xmlNodePtr root = xmlNewDocNode(doc, NULL, (const xmlChar *)rootElement, NULL);
+    xmlDocSetRootElement (doc, root);
+
+    if (nameSpace && *nameSpace)
     {
-	y2milestone("XML-RPC handling");
-	doc->children = xmlNewDocNode(doc, NULL, (const xmlChar *)"methodCall", NULL);
-	newDoc =  ParseYCPMethodCall(argMap, doc);
+        xmlNewNs (root,  (const xmlChar *)nameSpace, NULL);
     }
-    else
-    {
-	xmlNodePtr root = xmlNewDocNode(doc, NULL, (const xmlChar *)rootElement, NULL);
-	xmlDocSetRootElement (doc, root);
 
-	if (nameSpace && *nameSpace)
-	{
-	xmlNewNs (root,  (const xmlChar *)nameSpace, NULL);
-	}
-
-	if (typeNS && *typeNS) {
-	configNamespace = xmlNewNs (root,  (const xmlChar *)typeNS, (const xmlChar *)"config");
-	}
-	else {
-	    configNamespace = NULL;
-	}
-
-
-	doc->children = ParseYCPMap(argMap, root, doc);
-	doc->intSubset = xmlCreateIntSubset (doc,
-					     (const xmlChar *)rootElement,
-					     NULL,
-					     (const xmlChar *)( strlen(systemID)>0 ? systemID : NULL ));
-	newDoc = xmlCopyDoc (doc,1);
+    if (typeNS && *typeNS) {
+        configNamespace = xmlNewNs (root,  (const xmlChar *)typeNS, (const xmlChar *)"config");
     }
+    else {
+        configNamespace = NULL;
+    }
+
+
+    doc->children = ParseYCPMap(argMap, root, doc);
+    doc->intSubset = xmlCreateIntSubset (doc,
+                                        (const xmlChar *)rootElement,
+                                        NULL,
+                                        (const xmlChar *)( strlen(systemID)>0 ? systemID : NULL ));
+
+    newDoc = xmlCopyDoc (doc,1);
+
     xmlIndentTreeOutput  = 1;
-    xmlKeepBlanksDefault	(0);
+    xmlKeepBlanksDefault (0);
 
-    if (!strcmp(input,"string"))
+    if (string_output)
     {
-	xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
+        xmlDocDumpFormatMemory (newDoc, &mem, &size, 1);
 
-	result = YCPString((const char *)mem);
+        result = YCPString((const char *)mem);
 
-	xmlFree(mem);
+        xmlFree(mem);
+        xmlFreeDoc(doc);
     }
     else
     {
-	result = YCPBoolean( xmlSaveFormatFile(filename, newDoc, 1) != -1 );
-    }
-    xmlFreeDoc(doc);
-    if (strcmp(input,"string"))
-    {
-	xmlFreeDoc(newDoc);
+        result = YCPBoolean( xmlSaveFormatFile(filename, newDoc, 1) != -1 );
+        xmlFreeDoc(doc);
+        xmlFreeDoc(newDoc);
     }
     return result;
 }
