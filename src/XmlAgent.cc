@@ -850,7 +850,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
 
     YCPValue result = YCPVoid();
     int size;
-    std::string pth;
+    bool string_output = false;
 
     xmlDocPtr doc, newDoc;
     xmlChar *mem;
@@ -858,7 +858,7 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     for (int i=0; i<path->length(); i++)
     {
         if (path->component_str (i) == "string")
-            pth = path->component_str (i);
+            string_output = true;
     }
 
     YCPMap argMap = arg->asMap();
@@ -867,7 +867,6 @@ YCPValue XmlAgent::Execute(const YCPPath &path, const YCPValue& value, const YCP
     Cdata = getMapValueAsList ( options,"cdataSections" );
     ListEntries = getMapValueAsMap(options,"listEntries");
 
-    const bool string_output = (pth == "string");
     const char *rootElement	= getMapValue ( options,"rootElement");
     const char *systemID	= getMapValue ( options,"systemID" );
     const char *typeNS		= getMapValue ( options,"typeNamespace" );
