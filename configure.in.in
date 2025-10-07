@@ -4,8 +4,10 @@
 @YAST2-INIT-COMMON@
 @YAST2-INIT-PROGRAM@
 
-## special stuff
-AM_PATH_XML2
+## libxml2 stuff
+PKG_CHECK_MODULES(XML2, libxml-2.0)
+AC_SUBST(LIBXML2_CFLAGS)
+AC_SUBST(LIBXML2_LIBS)
 
 ## some common checks
 @YAST2-CHECKS-COMMON@
